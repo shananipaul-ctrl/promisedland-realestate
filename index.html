@@ -6,12 +6,21 @@
     <title>Promised Land Real Estate - Where your vision meets its address</title>
     <meta name="description" content="Promised Land Real Estate: Where your vision meets its address. Discover luxury properties, dream homes, and perfect commercial spaces.">
     <meta name="keywords" content="Promised Land Real Estate, property, homes, real estate, luxury properties, dream homes">
+    
+    <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    
+    <!-- Your Files -->
     <link rel="stylesheet" href="style.css">
+    
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/home--v1.png">
+    
     <!-- Your Logo Styles -->
     <style>
         .promised-logo {
@@ -144,7 +153,7 @@
         </a>
     </div>
 
-    <!-- Header with Your Logo -->
+    <!-- Header -->
     <header class="promised-header">
         <div class="promised-ribbon">
             <div class="container">
@@ -168,7 +177,7 @@
 
         <nav class="promised-nav">
             <div class="container">
-                <!-- Your Logo Here -->
+                <!-- Your Logo -->
                 <a href="#" class="promised-logo">
                     <div class="logo-visual">
                         <div class="logo-mountain"></div>
@@ -225,7 +234,7 @@
         </nav>
     </header>
 
-    <!-- Hero Section with Tagline -->
+    <!-- Hero Section -->
     <section class="hero-section" id="home">
         <div class="hero-background">
             <div class="color-wave" style="--color: #FF6B6B; --delay: 0s;"></div>
@@ -275,12 +284,12 @@
                         <div class="search-grid-promised">
                             <div class="search-input-group">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <input type="text" placeholder="Enter city, area, or project">
+                                <input type="text" placeholder="Enter city, area, or project" id="search-location">
                             </div>
                             
                             <div class="search-input-group">
                                 <i class="fas fa-home"></i>
-                                <select>
+                                <select id="property-type">
                                     <option value="">Property Type</option>
                                     <option value="villa">Luxury Villa</option>
                                     <option value="apartment">Apartment</option>
@@ -292,7 +301,7 @@
                             
                             <div class="search-input-group">
                                 <i class="fas fa-rupee-sign"></i>
-                                <select>
+                                <select id="budget-range">
                                     <option value="">Budget</option>
                                     <option value="0-50">Under 50L</option>
                                     <option value="50-100">50L - 1Cr</option>
@@ -301,7 +310,7 @@
                                 </select>
                             </div>
                             
-                            <button class="btn-search-promised">
+                            <button class="btn-search-promised" id="search-button">
                                 <i class="fas fa-search"></i> Search Now
                             </button>
                         </div>
@@ -310,15 +319,15 @@
                     <!-- Quick Stats -->
                     <div class="quick-stats">
                         <div class="stat-item-promised">
-                            <div class="stat-number">500+</div>
+                            <div class="stat-number" id="stat-properties">500+</div>
                             <div class="stat-label">Properties Listed</div>
                         </div>
                         <div class="stat-item-promised">
-                            <div class="stat-number">98%</div>
+                            <div class="stat-number" id="stat-satisfaction">98%</div>
                             <div class="stat-label">Client Satisfaction</div>
                         </div>
                         <div class="stat-item-promised">
-                            <div class="stat-number">15+</div>
+                            <div class="stat-number" id="stat-experience">15+</div>
                             <div class="stat-label">Years Experience</div>
                         </div>
                     </div>
@@ -353,7 +362,7 @@
         </div>
     </section>
 
-    <!-- Mission Statement Section -->
+    <!-- Mission Section -->
     <section class="mission-section">
         <div class="container">
             <div class="mission-card">
@@ -460,10 +469,14 @@
 
             <div class="properties-grid-promised" id="properties-container">
                 <!-- Properties will be loaded by JavaScript -->
+                <div class="loading-properties">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading properties...</p>
+                </div>
             </div>
 
             <div class="view-more-container">
-                <a href="#" class="btn-view-more-promised">
+                <a href="#" class="btn-view-more-promised" id="view-more-btn">
                     View All Properties
                     <i class="fas fa-arrow-right"></i>
                 </a>
@@ -579,9 +592,30 @@
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript Files -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Initialize Swiper -->
+    <script>
+        // Initialize agents swiper
+        const swiper = new Swiper('.agents-slider', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+    </script>
 </body>
 </html>
