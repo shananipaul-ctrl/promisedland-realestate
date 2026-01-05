@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promised Land Real Estate - Where your vision meets its address</title>
+    <meta name="description" content="Promised Land Real Estate: Where your vision meets its address. Discover luxury properties, dream homes, and perfect commercial spaces.">
+    <meta name="keywords" content="Promised Land Real Estate, property, homes, real estate, luxury properties, dream homes">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <!-- Your Logo Styles -->
+    <style>
+        .promised-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+        
+        .logo-visual {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            animation: logoGlow 3s ease-in-out infinite alternate;
+        }
+        
+        .logo-visual::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                transparent 30%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                transparent 70%);
+            animation: shine 3s infinite;
+        }
+        
+        .logo-mountain {
+            position: relative;
+            width: 25px;
+            height: 25px;
+            background: linear-gradient(45deg, #2C3E50, #34495E);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            margin-bottom: 5px;
+        }
+        
+        .logo-mountain::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 15px;
+            height: 15px;
+            background: linear-gradient(45deg, #3498DB, #2980B9);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .logo-text-container {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo-main-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+        }
+        
+        .logo-tagline {
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.9rem;
+            color: #7F8C8D;
+            font-weight: 600;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
+            }
+            100% {
+                box-shadow: 0 0 30px rgba(69, 183, 209, 0.5);
+            }
+        }
+        
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Rainbow Loader -->
+    <div class="rainbow-loader">
+        <div class="rainbow">
+            <div class="color" style="--c: #FF6B6B; --i: 0;"></div>
+            <div class="color" style="--c: #4ECDC4; --i: 1;"></div>
+            <div class="color" style="--c: #45B7D1; --i: 2;"></div>
+            <div class="color" style="--c: #96CEB4; --i: 3;"></div>
+            <div class="color" style="--c: #FFEAA7; --i: 4;"></div>
+            <div class="color" style="--c: #DDA0DD; --i: 5;"></div>
+        </div>
+        <p>Welcome to Promised Land Real Estate...</p>
+    </div>
+
+    <!-- Floating Contact -->
+    <div class="floating-contact">
+        <a href="https://wa.me/919080581547" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+            <span>Chat Now</span>
+        </a>
+        <a href="tel:+919080581547" class="call-float" title="Call Us">
+            <i class="fas fa-phone"></i>
+            <span>Call Now</span>
+        </a>
+        <a href="mailto:promisedland-j13@gmail.com" class="email-float" title="Email Us">
+            <i class="fas fa-envelope"></i>
+            <span>Email Us</span>
+        </a>
+    </div>
+
+    <!-- Header with Your Logo -->
+    <header class="promised-header">
+        <div class="promised-ribbon">
+            <div class="container">
+                <div class="ribbon-content">
+                    <div class="ribbon-text">
+                        <i class="fas fa-star"></i>
+                        <span>Your Dream Home Awaits!</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="contact-ribbon">
+                        <a href="tel:+919080581547">
+                            <i class="fas fa-phone"></i> +91 90805 81547
+                        </a>
+                        <a href="mailto:promisedland-j13@gmail.com">
+                            <i class="fas fa-envelope"></i> promisedland-j13@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="promised-nav">
+            <div class="container">
+                <!-- Your Logo Here -->
+                <a href="#" class="promised-logo">
+                    <div class="logo-visual">
+                        <div class="logo-mountain"></div>
+                        <i class="fas fa-home" style="color: white; font-size: 12px;"></i>
+                    </div>
+                    <div class="logo-text-container">
+                        <div class="logo-main-text">PROMISED LAND</div>
+                        <div class="logo-tagline">REAL ESTATE</div>
+                    </div>
+                </a>
+
+                <div class="nav-menu">
+                    <a href="#home" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="#properties" class="nav-link">
+                        <i class="fas fa-building"></i>
+                        <span>Properties</span>
+                    </a>
+                    <a href="#services" class="nav-link">
+                        <i class="fas fa-concierge-bell"></i>
+                        <span>Services</span>
+                    </a>
+                    <a href="#agents" class="nav-link">
+                        <i class="fas fa-user-tie"></i>
+                        <span>Agents</span>
+                    </a>
+                    <a href="#about" class="nav-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                    <a href="#contact" class="nav-link">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>Contact</span>
+                    </a>
+                </div>
+
+                <div class="nav-actions">
+                    <button class="btn-promised btn-list">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>List Property</span>
+                    </button>
+                    <button class="btn-promised-outline" id="login-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Client Login</span>
+                    </button>
+                </div>
+
+                <button class="menu-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Tagline -->
+    <section class="hero-section" id="home">
+        <div class="hero-background">
+            <div class="color-wave" style="--color: #FF6B6B; --delay: 0s;"></div>
+            <div class="color-wave" style="--color: #4ECDC4; --delay: 0.2s;"></div>
+            <div class="color-wave" style="--color: #45B7D1; --delay: 0.4s;"></div>
+            <div class="color-wave" style="--color: #96CEB4; --delay: 0.6s;"></div>
+            <div class="color-wave" style="--color: #FFEAA7; --delay: 0.8s;"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-grid">
+                <div class="hero-content">
+                    <div class="tagline-badge">
+                        <i class="fas fa-quote-left"></i>
+                        Where your vision meets its address
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Discover Your <br>
+                        <span class="promised-gradient">Promised Land</span><br>
+                        in Real Estate
+                    </h1>
+                    
+                    <p class="hero-description">
+                        At Promised Land Real Estate, we turn your property dreams into reality. 
+                        From luxury villas to commercial spaces, we guide you to your perfect address.
+                    </p>
+                    
+                    <!-- Property Search -->
+                    <div class="search-promised">
+                        <div class="search-tabs-promised">
+                            <button class="search-tab-promised active" data-type="buy">
+                                <i class="fas fa-shopping-cart"></i> Buy
+                            </button>
+                            <button class="search-tab-promised" data-type="rent">
+                                <i class="fas fa-key"></i> Rent
+                            </button>
+                            <button class="search-tab-promised" data-type="sell">
+                                <i class="fas fa-tag"></i> Sell
+                            </button>
+                            <button class="search-tab-promised" data-type="invest">
+                                <i class="fas fa-chart-line"></i> Invest
+                            </button>
+                        </div>
+                        
+                        <div class="search-grid-promised">
+                            <div class="search-input-group">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <input type="text" placeholder="Enter city, area, or project">
+                            </div>
+                            
+                            <div class="search-input-group">
+                                <i class="fas fa-home"></i>
+                                <select>
+                                    <option value="">Property Type</option>
+                                    <option value="villa">Luxury Villa</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="house">Independent House</option>
+                                    <option value="commercial">Commercial</option>
+                                    <option value="land">Plot/Land</option>
+                                </select>
+                            </div>
+                            
+                            <div class="search-input-group">
+                                <i class="fas fa-rupee-sign"></i>
+                                <select>
+                                    <option value="">Budget</option>
+                                    <option value="0-50">Under 50L</option>
+                                    <option value="50-100">50L - 1Cr</option>
+                                    <option value="100-500">1Cr - 5Cr</option>
+                                    <option value="500+">5Cr+</option>
+                                </select>
+                            </div>
+                            
+                            <button class="btn-search-promised">
+                                <i class="fas fa-search"></i> Search Now
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="quick-stats">
+                        <div class="stat-item-promised">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Properties Listed</div>
+                        </div>
+                        <div class="stat-item-promised">
+                            <div class="stat-number">98%</div>
+                            <div class="stat-label">Client Satisfaction</div>
+                        </div>
+                        <div class="stat-item-promised">
+                            <div class="stat-number">15+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="property-showcase">
+                        <div class="property-card-floating" style="--delay: 0s;">
+                            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Luxury Villa">
+                            <div class="property-overlay">
+                                <h4>Luxury Villa</h4>
+                                <p>₹ 2.5 Cr</p>
+                            </div>
+                        </div>
+                        <div class="property-card-floating" style="--delay: 0.3s;">
+                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Modern Apartment">
+                            <div class="property-overlay">
+                                <h4>Modern Apartment</h4>
+                                <p>₹ 85 Lakh</p>
+                            </div>
+                        </div>
+                        <div class="property-card-floating" style="--delay: 0.6s;">
+                            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Commercial Space">
+                            <div class="property-overlay">
+                                <h4>Commercial Space</h4>
+                                <p>₹ 3.2 Cr</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement Section -->
+    <section class="mission-section">
+        <div class="container">
+            <div class="mission-card">
+                <div class="mission-icon">
+                    <i class="fas fa-bullseye"></i>
+                </div>
+                <h2 class="mission-title">Our Promise to You</h2>
+                <p class="mission-text">
+                    At <strong>Promised Land Real Estate</strong>, we believe every dream deserves an address. 
+                    We're committed to guiding you through your real estate journey with transparency, 
+                    expertise, and personalized service. Your vision is our mission.
+                </p>
+                <div class="mission-tagline">
+                    <i class="fas fa-star"></i>
+                    Where your vision meets its address
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header-promised">
+                <h2 class="section-title-promised">Why Choose <span class="promised-gradient">Promised Land</span>?</h2>
+                <p class="section-subtitle-promised">Experience the difference with our premium services</p>
+            </div>
+
+            <div class="features-grid-promised">
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3>Smart Property Search</h3>
+                    <p>Advanced filters and AI-powered recommendations to find your perfect match.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Trusted Partnerships</h3>
+                    <p>Verified listings and transparent dealings with trusted developers.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3>Legal Assistance</h3>
+                    <p>Complete legal documentation and verification support.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3>Virtual Tours</h3>
+                    <p>360° virtual property tours from the comfort of your home.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Investment Guidance</h3>
+                    <p>Expert advice on property investment and ROI analysis.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+
+                <div class="feature-card-promised">
+                    <div class="feature-icon-promised">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Support</h3>
+                    <p>Round-the-clock customer support for all your queries.</p>
+                    <div class="feature-glow-promised"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Properties Section -->
+    <section class="properties-section" id="properties">
+        <div class="container">
+            <div class="section-header-promised">
+                <h2 class="section-title-promised">Featured <span class="promised-gradient">Properties</span></h2>
+                <p class="section-subtitle-promised">Discover your dream property in our curated collection</p>
+            </div>
+
+            <div class="property-categories">
+                <button class="category-btn active" data-category="all">All Properties</button>
+                <button class="category-btn" data-category="luxury">Luxury Homes</button>
+                <button class="category-btn" data-category="apartment">Apartments</button>
+                <button class="category-btn" data-category="commercial">Commercial</button>
+                <button class="category-btn" data-category="land">Plots & Land</button>
+                <button class="category-btn" data-category="villa">Villas</button>
+            </div>
+
+            <div class="properties-grid-promised" id="properties-container">
+                <!-- Properties will be loaded by JavaScript -->
+            </div>
+
+            <div class="view-more-container">
+                <a href="#" class="btn-view-more-promised">
+                    View All Properties
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-card-promised">
+                <div class="cta-content">
+                    <h2>Ready to Find Your Promised Land?</h2>
+                    <p>Contact us today for a personalized property consultation</p>
+                    <div class="cta-buttons">
+                        <a href="tel:+919080581547" class="btn-cta-call">
+                            <i class="fas fa-phone"></i> Call Now: +91 90805 81547
+                        </a>
+                        <a href="mailto:promisedland-j13@gmail.com" class="btn-cta-email">
+                            <i class="fas fa-envelope"></i> Email Us
+                        </a>
+                    </div>
+                </div>
+                <div class="cta-visual">
+                    <div class="cta-house">
+                        <i class="fas fa-home"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="promised-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid-promised">
+                    <div class="footer-col-promised">
+                        <div class="footer-logo-promised">
+                            <div class="logo-visual-small">
+                                <div class="logo-mountain"></div>
+                            </div>
+                            <div>
+                                <h3>PROMISED LAND</h3>
+                                <p class="footer-tagline">Real Estate</p>
+                                <p class="footer-motto">Where your vision meets its address</p>
+                            </div>
+                        </div>
+                        <p class="footer-description">
+                            Your trusted partner in finding the perfect property. 
+                            We connect dreams with addresses.
+                        </p>
+                        <div class="footer-social">
+                            <a href="#" class="social-link-promised"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-link-promised"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-link-promised"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-link-promised"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="footer-col-promised">
+                        <h4>Quick Links</h4>
+                        <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
+                        <a href="#properties"><i class="fas fa-chevron-right"></i> Properties</a>
+                        <a href="#services"><i class="fas fa-chevron-right"></i> Services</a>
+                        <a href="#agents"><i class="fas fa-chevron-right"></i> Agents</a>
+                        <a href="#about"><i class="fas fa-chevron-right"></i> About Us</a>
+                    </div>
+
+                    <div class="footer-col-promised">
+                        <h4>Our Services</h4>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Property Buying</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Property Selling</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Rental Services</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Legal Assistance</a>
+                        <a href="#"><i class="fas fa-chevron-right"></i> Investment Advisory</a>
+                    </div>
+
+                    <div class="footer-col-promised">
+                        <h4>Contact Info</h4>
+                        <div class="contact-info-footer">
+                            <p>
+                                <i class="fas fa-phone"></i>
+                                <a href="tel:+919080581547">+91 90805 81547</a>
+                            </p>
+                            <p>
+                                <i class="fas fa-envelope"></i>
+                                <a href="mailto:promisedland-j13@gmail.com">promisedland-j13@gmail.com</a>
+                            </p>
+                            <p>
+                                <i class="fas fa-globe"></i>
+                                <a href="https://promisedland.run.place" target="_blank">promisedland.run.place</a>
+                            </p>
+                            <p>
+                                <i class="fas fa-clock"></i>
+                                Mon-Sun: 9:00 AM - 9:00 PM
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2024 Promised Land Real Estate. All rights reserved.</p>
+                <div class="footer-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
