@@ -4,618 +4,877 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Promised Land Real Estate - Where your vision meets its address</title>
-    <meta name="description" content="Promised Land Real Estate: Where your vision meets its address. Discover luxury properties, dream homes, and perfect commercial spaces.">
-    <meta name="keywords" content="Promised Land Real Estate, property, homes, real estate, luxury properties, dream homes">
+    <meta name="description" content="Promised Land Real Estate: Where your vision meets its address. Luxury properties, dream homes, commercial spaces.">
     
-    <!-- External Libraries -->
+    <!-- CDN Links -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-    
-    <!-- Your Files -->
-    <link rel="stylesheet" href="style.css">
-    
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://img.icons8.com/color/96/000000/home--v1.png">
-    
-    <!-- Your Logo Styles -->
+    <!-- CSS -->
     <style>
-        .promised-logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-decoration: none;
+        /* ==== RESET & BASE ==== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: #f8f9ff; color: #2c3e50; }
+        
+        /* ==== COLORS ==== */
+        :root {
+            --red: #FF6B6B; --teal: #4ECDC4; --blue: #45B7D1; --green: #96CEB4;
+            --yellow: #FFEAA7; --purple: #DDA0DD; --orange: #FFA07A;
+            --gradient: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
         }
         
-        .logo-visual {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7);
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            animation: logoGlow 3s ease-in-out infinite alternate;
+        /* ==== LOADER ==== */
+        .loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #1A1F3D; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 9999;
+            transition: opacity 0.5s;
+        }
+        .rainbow { display: flex; gap: 8px; margin-bottom: 30px; }
+        .rainbow div {
+            width: 25px; height: 120px; border-radius: 12px;
+            animation: bounce 1.5s ease-in-out infinite;
+        }
+        .rainbow div:nth-child(1) { background: #FF6B6B; animation-delay: 0s; }
+        .rainbow div:nth-child(2) { background: #4ECDC4; animation-delay: 0.2s; }
+        .rainbow div:nth-child(3) { background: #45B7D1; animation-delay: 0.4s; }
+        .rainbow div:nth-child(4) { background: #96CEB4; animation-delay: 0.6s; }
+        .rainbow div:nth-child(5) { background: #FFEAA7; animation-delay: 0.8s; }
+        @keyframes bounce {
+            0%,100% { transform: translateY(0); height: 120px; }
+            50% { transform: translateY(-30px); height: 150px; }
         }
         
-        .logo-visual::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, 
-                transparent 30%, 
-                rgba(255, 255, 255, 0.1) 50%, 
-                transparent 70%);
-            animation: shine 3s infinite;
+        /* ==== HEADER ==== */
+        header {
+            background: white; position: fixed; top: 0; width: 100%; z-index: 100;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05); padding: 10px 0;
         }
-        
-        .logo-mountain {
-            position: relative;
-            width: 25px;
-            height: 25px;
-            background: linear-gradient(45deg, #2C3E50, #34495E);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            margin-bottom: 5px;
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .logo {
+            display: flex; align-items: center; gap: 15px; text-decoration: none;
         }
-        
-        .logo-mountain::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 15px;
-            height: 15px;
-            background: linear-gradient(45deg, #3498DB, #2980B9);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        .logo-icon {
+            width: 60px; height: 60px; background: var(--gradient); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center; color: white;
+            font-size: 1.5rem; animation: glow 3s infinite alternate;
         }
-        
-        .logo-text-container {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .logo-main-text {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 900;
+        .logo-text { display: flex; flex-direction: column; }
+        .logo-main {
+            font-family: 'Montserrat', sans-serif; font-size: 1.8rem; font-weight: 900;
             background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #45B7D1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 1px;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
-        
         .logo-tagline {
-            font-family: 'Nunito', sans-serif;
-            font-size: 0.9rem;
-            color: #7F8C8D;
-            font-weight: 600;
-            font-style: italic;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
+            font-family: 'Nunito', sans-serif; font-size: 0.9rem; color: #7F8C8D;
+            font-weight: 600; font-style: italic;
         }
         
-        @keyframes logoGlow {
-            0% {
-                box-shadow: 0 0 20px rgba(255, 107, 107, 0.3);
-            }
-            100% {
-                box-shadow: 0 0 30px rgba(69, 183, 209, 0.5);
-            }
+        /* ==== HERO ==== */
+        .hero {
+            padding: 180px 0 100px; margin-top: 80px; position: relative;
+            background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(78,205,196,0.1));
+        }
+        .hero-title {
+            font-family: 'Montserrat', sans-serif; font-size: 3.5rem; font-weight: 800;
+            line-height: 1.2; margin-bottom: 20px;
+        }
+        .gradient-text {
+            background: var(--gradient); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; display: inline-block;
+        }
+        .search-box {
+            background: white; border-radius: 20px; padding: 30px;
+            box-shadow: 0 20px 50px rgba(69,183,209,0.2); margin: 40px 0;
+        }
+        .search-grid {
+            display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px;
+        }
+        .search-field {
+            display: flex; align-items: center; gap: 10px; padding: 15px 20px;
+            background: #F8F9FA; border-radius: 12px; border: 2px solid transparent;
+        }
+        .search-field i { color: #4ECDC4; }
+        .search-field input, .search-field select {
+            border: none; background: transparent; width: 100%;
+            font-size: 1rem; outline: none;
+        }
+        .btn-search {
+            background: var(--gradient); color: white; border: none;
+            padding: 15px 30px; border-radius: 12px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 10px;
         }
         
-        @keyframes shine {
-            0% {
-                transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            }
-            100% {
-                transform: translateX(100%) translateY(100%) rotate(45deg);
-            }
+        /* ==== PROPERTIES ==== */
+        .properties { padding: 100px 0; }
+        .section-title {
+            font-family: 'Montserrat', sans-serif; font-size: 3rem; font-weight: 800;
+            text-align: center; margin-bottom: 15px;
+        }
+        .properties-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px; margin: 50px 0;
+        }
+        .property-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.15); transition: transform 0.3s;
+        }
+        .property-card:hover { transform: translateY(-10px); }
+        .property-img { height: 250px; overflow: hidden; }
+        .property-img img { width: 100%; height: 100%; object-fit: cover; }
+        .property-content { padding: 25px; }
+        .property-price {
+            font-size: 1.8rem; font-weight: 800; color: #FF6B6B; margin-bottom: 10px;
+        }
+        .property-title { font-size: 1.3rem; margin-bottom: 10px; }
+        
+        /* ==== FEATURES ==== */
+        .features { padding: 100px 0; background: #f8f9ff; }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; margin-top: 50px;
+        }
+        .feature-card {
+            background: white; padding: 40px 30px; border-radius: 20px; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .feature-icon {
+            width: 80px; height: 80px; background: var(--gradient); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 25px; color: white; font-size: 2rem;
+        }
+        
+        /* ==== CONTACT ==== */
+        .contact { padding: 100px 0; background: var(--gradient); color: white; }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+        .contact-info { background: rgba(255,255,255,0.1); padding: 40px; border-radius: 20px; }
+        .contact-form { background: white; padding: 40px; border-radius: 20px; color: #2c3e50; }
+        
+        /* ==== FOOTER ==== */
+        footer { background: #1A1F3D; color: white; padding: 80px 0 30px; }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        
+        /* ==== RESPONSIVE ==== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .section-title { font-size: 2rem; }
+            .search-grid { grid-template-columns: 1fr; }
+            .properties-grid { grid-template-columns: 1fr; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+        
+        /* ==== ANIMATIONS ==== */
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(255,107,107,0.3); }
+            100% { box-shadow: 0 0 30px rgba(69,183,209,0.5); }
         }
     </style>
 </head>
 <body>
-    <!-- Rainbow Loader -->
-    <div class="rainbow-loader">
+    <!-- Loader -->
+    <div class="loader" id="loader">
         <div class="rainbow">
-            <div class="color" style="--c: #FF6B6B; --i: 0;"></div>
-            <div class="color" style="--c: #4ECDC4; --i: 1;"></div>
-            <div class="color" style="--c: #45B7D1; --i: 2;"></div>
-            <div class="color" style="--c: #96CEB4; --i: 3;"></div>
-            <div class="color" style="--c: #FFEAA7; --i: 4;"></div>
-            <div class="color" style="--c: #DDA0DD; --i: 5;"></div>
+            <div></div><div></div><div></div><div></div><div></div>
         </div>
-        <p>Welcome to Promised Land Real Estate...</p>
-    </div>
-
-    <!-- Floating Contact -->
-    <div class="floating-contact">
-        <a href="https://wa.me/919080581547" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-            <span>Chat Now</span>
-        </a>
-        <a href="tel:+919080581547" class="call-float" title="Call Us">
-            <i class="fas fa-phone"></i>
-            <span>Call Now</span>
-        </a>
-        <a href="mailto:promisedland-j13@gmail.com" class="email-float" title="Email Us">
-            <i class="fas fa-envelope"></i>
-            <span>Email Us</span>
-        </a>
+        <p style="color: white; font-size: 1.3rem;">Welcome to Promised Land Real Estate...</p>
     </div>
 
     <!-- Header -->
-    <header class="promised-header">
-        <div class="promised-ribbon">
-            <div class="container">
-                <div class="ribbon-content">
-                    <div class="ribbon-text">
-                        <i class="fas fa-star"></i>
-                        <span>Your Dream Home Awaits!</span>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <div class="contact-ribbon">
-                        <a href="tel:+919080581547">
-                            <i class="fas fa-phone"></i> +91 90805 81547
-                        </a>
-                        <a href="mailto:promisedland-j13@gmail.com">
-                            <i class="fas fa-envelope"></i> promisedland-j13@gmail.com
-                        </a>
-                    </div>
+    <header>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-mountain-sun"></i>
                 </div>
-            </div>
+                <div class="logo-text">
+                    <div class="logo-main">PROMISED LAND</div>
+                    <div class="logo-tagline">REAL ESTATE</div>
+                </div>
+            </a>
+            
+            <nav style="display: flex; gap: 30px;">
+                <a href="#home" style="text-decoration: none; color: #2c3e50; font-weight: 600;">Home</a>
+                <a href="#properties" style="text-decoration: none; color: #2c3e50; font-weight: 600;">Properties</a>
+                <a href="#services" style="text-decoration: none; color: #2c3e50; font-weight: 600;">Services</a>
+                <a href="#contact" style="text-decoration: none; color: #2c3e50; font-weight: 600;">Contact</a>
+            </nav>
+            
+            <a href="tel:+919080581547" style="background: var(--gradient); color: white; padding: 12px 24px; 
+               border-radius: 50px; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-phone"></i> Call Now
+            </a>
         </div>
-
-        <nav class="promised-nav">
-            <div class="container">
-                <!-- Your Logo -->
-                <a href="#" class="promised-logo">
-                    <div class="logo-visual">
-                        <div class="logo-mountain"></div>
-                        <i class="fas fa-home" style="color: white; font-size: 12px;"></i>
-                    </div>
-                    <div class="logo-text-container">
-                        <div class="logo-main-text">PROMISED LAND</div>
-                        <div class="logo-tagline">REAL ESTATE</div>
-                    </div>
-                </a>
-
-                <div class="nav-menu">
-                    <a href="#home" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="#properties" class="nav-link">
-                        <i class="fas fa-building"></i>
-                        <span>Properties</span>
-                    </a>
-                    <a href="#services" class="nav-link">
-                        <i class="fas fa-concierge-bell"></i>
-                        <span>Services</span>
-                    </a>
-                    <a href="#agents" class="nav-link">
-                        <i class="fas fa-user-tie"></i>
-                        <span>Agents</span>
-                    </a>
-                    <a href="#about" class="nav-link">
-                        <i class="fas fa-info-circle"></i>
-                        <span>About Us</span>
-                    </a>
-                    <a href="#contact" class="nav-link">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>Contact</span>
-                    </a>
-                </div>
-
-                <div class="nav-actions">
-                    <button class="btn-promised btn-list">
-                        <i class="fas fa-plus-circle"></i>
-                        <span>List Property</span>
-                    </button>
-                    <button class="btn-promised-outline" id="login-btn">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Client Login</span>
-                    </button>
-                </div>
-
-                <button class="menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </nav>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="hero-background">
-            <div class="color-wave" style="--color: #FF6B6B; --delay: 0s;"></div>
-            <div class="color-wave" style="--color: #4ECDC4; --delay: 0.2s;"></div>
-            <div class="color-wave" style="--color: #45B7D1; --delay: 0.4s;"></div>
-            <div class="color-wave" style="--color: #96CEB4; --delay: 0.6s;"></div>
-            <div class="color-wave" style="--color: #FFEAA7; --delay: 0.8s;"></div>
-        </div>
-        
+    <section class="hero" id="home">
         <div class="container">
-            <div class="hero-grid">
-                <div class="hero-content">
-                    <div class="tagline-badge">
-                        <i class="fas fa-quote-left"></i>
-                        Where your vision meets its address
-                        <i class="fas fa-quote-right"></i>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <div style="display: inline-flex; align-items: center; gap: 10px; background: white; 
+                     padding: 10px 20px; border-radius: 50px; margin-bottom: 30px; border: 2px solid transparent;
+                     border-image: var(--gradient) 1;">
+                    <i class="fas fa-quote-left" style="color: #FF6B6B;"></i>
+                    <span style="font-style: italic; font-weight: 600;">Where your vision meets its address</span>
+                    <i class="fas fa-quote-right" style="color: #FF6B6B;"></i>
+                </div>
+                
+                <h1 class="hero-title">
+                    Discover Your <br>
+                    <span class="gradient-text">Promised Land</span><br>
+                    in Real Estate
+                </h1>
+                
+                <p style="font-size: 1.1rem; color: #7F8C8D; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    At Promised Land Real Estate, we turn your property dreams into reality. 
+                    From luxury villas to commercial spaces, we guide you to your perfect address.
+                </p>
+                
+                <!-- Search Box -->
+                <div class="search-box">
+                    <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                        <button style="flex:1; padding:15px; border:none; background:#F0F4F8; border-radius:12px; 
+                                color:#7F8C8D; font-weight:600; cursor:pointer;" class="search-tab active">
+                            <i class="fas fa-shopping-cart"></i> Buy
+                        </button>
+                        <button style="flex:1; padding:15px; border:none; background:#F0F4F8; border-radius:12px; 
+                                color:#7F8C8D; font-weight:600; cursor:pointer;" class="search-tab">
+                            <i class="fas fa-key"></i> Rent
+                        </button>
+                        <button style="flex:1; padding:15px; border:none; background:#F0F4F8; border-radius:12px; 
+                                color:#7F8C8D; font-weight:600; cursor:pointer;" class="search-tab">
+                            <i class="fas fa-tag"></i> Sell
+                        </button>
                     </div>
                     
-                    <h1 class="hero-title">
-                        Discover Your <br>
-                        <span class="promised-gradient">Promised Land</span><br>
-                        in Real Estate
-                    </h1>
-                    
-                    <p class="hero-description">
-                        At Promised Land Real Estate, we turn your property dreams into reality. 
-                        From luxury villas to commercial spaces, we guide you to your perfect address.
-                    </p>
-                    
-                    <!-- Property Search -->
-                    <div class="search-promised">
-                        <div class="search-tabs-promised">
-                            <button class="search-tab-promised active" data-type="buy">
-                                <i class="fas fa-shopping-cart"></i> Buy
-                            </button>
-                            <button class="search-tab-promised" data-type="rent">
-                                <i class="fas fa-key"></i> Rent
-                            </button>
-                            <button class="search-tab-promised" data-type="sell">
-                                <i class="fas fa-tag"></i> Sell
-                            </button>
-                            <button class="search-tab-promised" data-type="invest">
-                                <i class="fas fa-chart-line"></i> Invest
-                            </button>
+                    <div class="search-grid">
+                        <div class="search-field">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <input type="text" placeholder="Enter city, area, or project">
                         </div>
                         
-                        <div class="search-grid-promised">
-                            <div class="search-input-group">
-                                <i class="fas fa-map-marker-alt"></i>
-                                <input type="text" placeholder="Enter city, area, or project" id="search-location">
-                            </div>
-                            
-                            <div class="search-input-group">
-                                <i class="fas fa-home"></i>
-                                <select id="property-type">
-                                    <option value="">Property Type</option>
-                                    <option value="villa">Luxury Villa</option>
-                                    <option value="apartment">Apartment</option>
-                                    <option value="house">Independent House</option>
-                                    <option value="commercial">Commercial</option>
-                                    <option value="land">Plot/Land</option>
-                                </select>
-                            </div>
-                            
-                            <div class="search-input-group">
-                                <i class="fas fa-rupee-sign"></i>
-                                <select id="budget-range">
-                                    <option value="">Budget</option>
-                                    <option value="0-50">Under 50L</option>
-                                    <option value="50-100">50L - 1Cr</option>
-                                    <option value="100-500">1Cr - 5Cr</option>
-                                    <option value="500+">5Cr+</option>
-                                </select>
-                            </div>
-                            
-                            <button class="btn-search-promised" id="search-button">
-                                <i class="fas fa-search"></i> Search Now
-                            </button>
+                        <div class="search-field">
+                            <i class="fas fa-home"></i>
+                            <select>
+                                <option value="">Property Type</option>
+                                <option value="villa">Luxury Villa</option>
+                                <option value="apartment">Apartment</option>
+                                <option value="commercial">Commercial</option>
+                            </select>
                         </div>
-                    </div>
-                    
-                    <!-- Quick Stats -->
-                    <div class="quick-stats">
-                        <div class="stat-item-promised">
-                            <div class="stat-number" id="stat-properties">500+</div>
-                            <div class="stat-label">Properties Listed</div>
+                        
+                        <div class="search-field">
+                            <i class="fas fa-rupee-sign"></i>
+                            <select>
+                                <option value="">Budget</option>
+                                <option value="0-50">Under 50L</option>
+                                <option value="50-100">50L - 1Cr</option>
+                                <option value="100-500">1Cr - 5Cr</option>
+                            </select>
                         </div>
-                        <div class="stat-item-promised">
-                            <div class="stat-number" id="stat-satisfaction">98%</div>
-                            <div class="stat-label">Client Satisfaction</div>
-                        </div>
-                        <div class="stat-item-promised">
-                            <div class="stat-number" id="stat-experience">15+</div>
-                            <div class="stat-label">Years Experience</div>
-                        </div>
+                        
+                        <button class="btn-search">
+                            <i class="fas fa-search"></i> Search
+                        </button>
                     </div>
                 </div>
                 
-                <div class="hero-visual">
-                    <div class="property-showcase">
-                        <div class="property-card-floating" style="--delay: 0s;">
-                            <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Luxury Villa">
-                            <div class="property-overlay">
-                                <h4>Luxury Villa</h4>
-                                <p>₹ 2.5 Cr</p>
-                            </div>
-                        </div>
-                        <div class="property-card-floating" style="--delay: 0.3s;">
-                            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Modern Apartment">
-                            <div class="property-overlay">
-                                <h4>Modern Apartment</h4>
-                                <p>₹ 85 Lakh</p>
-                            </div>
-                        </div>
-                        <div class="property-card-floating" style="--delay: 0.6s;">
-                            <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Commercial Space">
-                            <div class="property-overlay">
-                                <h4>Commercial Space</h4>
-                                <p>₹ 3.2 Cr</p>
-                            </div>
-                        </div>
+                <!-- Stats -->
+                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 40px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 800; background: var(--gradient); 
+                             -webkit-background-clip: text; -webkit-text-fill-color: transparent;">500+</div>
+                        <div style="font-size: 0.9rem; color: #7F8C8D; font-weight: 600;">Properties Listed</div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mission Section -->
-    <section class="mission-section">
-        <div class="container">
-            <div class="mission-card">
-                <div class="mission-icon">
-                    <i class="fas fa-bullseye"></i>
-                </div>
-                <h2 class="mission-title">Our Promise to You</h2>
-                <p class="mission-text">
-                    At <strong>Promised Land Real Estate</strong>, we believe every dream deserves an address. 
-                    We're committed to guiding you through your real estate journey with transparency, 
-                    expertise, and personalized service. Your vision is our mission.
-                </p>
-                <div class="mission-tagline">
-                    <i class="fas fa-star"></i>
-                    Where your vision meets its address
-                    <i class="fas fa-star"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features-section">
-        <div class="container">
-            <div class="section-header-promised">
-                <h2 class="section-title-promised">Why Choose <span class="promised-gradient">Promised Land</span>?</h2>
-                <p class="section-subtitle-promised">Experience the difference with our premium services</p>
-            </div>
-
-            <div class="features-grid-promised">
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-search-location"></i>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 800; background: var(--gradient); 
+                             -webkit-background-clip: text; -webkit-text-fill-color: transparent;">98%</div>
+                        <div style="font-size: 0.9rem; color: #7F8C8D; font-weight: 600;">Client Satisfaction</div>
                     </div>
-                    <h3>Smart Property Search</h3>
-                    <p>Advanced filters and AI-powered recommendations to find your perfect match.</p>
-                    <div class="feature-glow-promised"></div>
-                </div>
-
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-handshake"></i>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 800; background: var(--gradient); 
+                             -webkit-background-clip: text; -webkit-text-fill-color: transparent;">15+</div>
+                        <div style="font-size: 0.9rem; color: #7F8C8D; font-weight: 600;">Years Experience</div>
                     </div>
-                    <h3>Trusted Partnerships</h3>
-                    <p>Verified listings and transparent dealings with trusted developers.</p>
-                    <div class="feature-glow-promised"></div>
-                </div>
-
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-file-contract"></i>
-                    </div>
-                    <h3>Legal Assistance</h3>
-                    <p>Complete legal documentation and verification support.</p>
-                    <div class="feature-glow-promised"></div>
-                </div>
-
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-vr-cardboard"></i>
-                    </div>
-                    <h3>Virtual Tours</h3>
-                    <p>360° virtual property tours from the comfort of your home.</p>
-                    <div class="feature-glow-promised"></div>
-                </div>
-
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>Investment Guidance</h3>
-                    <p>Expert advice on property investment and ROI analysis.</p>
-                    <div class="feature-glow-promised"></div>
-                </div>
-
-                <div class="feature-card-promised">
-                    <div class="feature-icon-promised">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Round-the-clock customer support for all your queries.</p>
-                    <div class="feature-glow-promised"></div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Properties Section -->
-    <section class="properties-section" id="properties">
+    <section class="properties" id="properties">
         <div class="container">
-            <div class="section-header-promised">
-                <h2 class="section-title-promised">Featured <span class="promised-gradient">Properties</span></h2>
-                <p class="section-subtitle-promised">Discover your dream property in our curated collection</p>
+            <h2 class="section-title">
+                Featured <span class="gradient-text">Properties</span>
+            </h2>
+            <p style="text-align: center; color: #7F8C8D; max-width: 600px; margin: 0 auto 50px;">
+                Discover your dream property in our curated collection
+            </p>
+            
+            <!-- Property Categories -->
+            <div style="display: flex; justify-content: center; gap: 15px; margin-bottom: 50px; flex-wrap: wrap;">
+                <button class="category-btn active" data-category="all" style="padding:12px 25px; border:2px solid transparent;
+                        background:var(--gradient); color:white; border-radius:50px; font-weight:600; cursor:pointer;">
+                    All Properties
+                </button>
+                <button class="category-btn" data-category="luxury" style="padding:12px 25px; border:2px solid #e2e8f0;
+                        background:white; color:#7F8C8D; border-radius:50px; font-weight:600; cursor:pointer;">
+                    Luxury Homes
+                </button>
+                <button class="category-btn" data-category="apartment" style="padding:12px 25px; border:2px solid #e2e8f0;
+                        background:white; color:#7F8C8D; border-radius:50px; font-weight:600; cursor:pointer;">
+                    Apartments
+                </button>
+                <button class="category-btn" data-category="commercial" style="padding:12px 25px; border:2px solid #e2e8f0;
+                        background:white; color:#7F8C8D; border-radius:50px; font-weight:600; cursor:pointer;">
+                    Commercial
+                </button>
             </div>
-
-            <div class="property-categories">
-                <button class="category-btn active" data-category="all">All Properties</button>
-                <button class="category-btn" data-category="luxury">Luxury Homes</button>
-                <button class="category-btn" data-category="apartment">Apartments</button>
-                <button class="category-btn" data-category="commercial">Commercial</button>
-                <button class="category-btn" data-category="land">Plots & Land</button>
-                <button class="category-btn" data-category="villa">Villas</button>
+            
+            <!-- Properties Grid (Will be populated by JavaScript) -->
+            <div class="properties-grid" id="properties-container">
+                <!-- Properties loaded here by JavaScript -->
             </div>
-
-            <div class="properties-grid-promised" id="properties-container">
-                <!-- Properties will be loaded by JavaScript -->
-                <div class="loading-properties">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Loading properties...</p>
-                </div>
-            </div>
-
-            <div class="view-more-container">
-                <a href="#" class="btn-view-more-promised" id="view-more-btn">
-                    View All Properties
-                    <i class="fas fa-arrow-right"></i>
+            
+            <div style="text-align: center;">
+                <a href="#" style="display:inline-flex; align-items:center; gap:10px; background:var(--gradient); 
+                   color:white; padding:15px 30px; border-radius:50px; text-decoration:none; font-weight:600;">
+                    View All Properties <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
+    <!-- Features Section -->
+    <section class="features" id="services">
         <div class="container">
-            <div class="cta-card-promised">
-                <div class="cta-content">
-                    <h2>Ready to Find Your Promised Land?</h2>
-                    <p>Contact us today for a personalized property consultation</p>
-                    <div class="cta-buttons">
-                        <a href="tel:+919080581547" class="btn-cta-call">
-                            <i class="fas fa-phone"></i> Call Now: +91 90805 81547
-                        </a>
-                        <a href="mailto:promisedland-j13@gmail.com" class="btn-cta-email">
-                            <i class="fas fa-envelope"></i> Email Us
-                        </a>
+            <h2 class="section-title">
+                Why Choose <span class="gradient-text">Promised Land</span>?
+            </h2>
+            <p style="text-align: center; color: #7F8C8D; max-width: 600px; margin: 0 auto 50px;">
+                Experience the difference with our premium services
+            </p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">Smart Property Search</h3>
+                    <p style="color:#7F8C8D;">Advanced filters and AI-powered recommendations to find your perfect match.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">Trusted Partnerships</h3>
+                    <p style="color:#7F8C8D;">Verified listings and transparent dealings with trusted developers.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">Legal Assistance</h3>
+                    <p style="color:#7F8C8D;">Complete legal documentation and verification support.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-vr-cardboard"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">Virtual Tours</h3>
+                    <p style="color:#7F8C8D;">360° virtual property tours from the comfort of your home.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">Investment Guidance</h3>
+                    <p style="color:#7F8C8D;">Expert advice on property investment and ROI analysis.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 style="font-size:1.5rem; margin-bottom:15px;">24/7 Support</h3>
+                    <p style="color:#7F8C8D;">Round-the-clock customer support for all your queries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2 style="font-family:'Montserrat',sans-serif; font-size:2.5rem; margin-bottom:20px;">
+                        Get In <span style="color:#FFEAA7;">Touch</span>
+                    </h2>
+                    <p style="margin-bottom:30px; opacity:0.9;">
+                        Let's find your promised land together
+                    </p>
+                    
+                    <div style="margin-bottom:30px;">
+                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                            <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:50%;
+                                 display:flex; align-items:center; justify-content:center;">
+                                <i class="fas fa-phone" style="color:#FFEAA7;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom:5px;">Call Us</h4>
+                                <a href="tel:+919080581547" style="color:white; text-decoration:none; font-size:1.1rem;">
+                                    +91 90805 81547
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                            <div style="width:50px; height:50px; background:rgba(255,255,255,0.2); border-radius:50%;
+                                 display:flex; align-items:center; justify-content:center;">
+                                <i class="fas fa-envelope" style="color:#FFEAA7;"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom:5px;">Email Us</h4>
+                                <a href="mailto:promisedland-j13@gmail.com" style="color:white; text-decoration:none; font-size:1rem;">
+                                    promisedland-j13@gmail.com
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="cta-visual">
-                    <div class="cta-house">
-                        <i class="fas fa-home"></i>
-                    </div>
+                
+                <div class="contact-form">
+                    <h3 style="margin-bottom:30px; font-size:1.8rem;">Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div style="margin-bottom:20px;">
+                            <input type="text" placeholder="Your Name" required 
+                                   style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; font-size:1rem;">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <input type="email" placeholder="Your Email" required 
+                                   style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; font-size:1rem;">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <input type="tel" placeholder="Phone Number" required 
+                                   style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; font-size:1rem;">
+                        </div>
+                        <div style="margin-bottom:20px;">
+                            <textarea placeholder="Your Message" rows="4" 
+                                      style="width:100%; padding:15px; border:2px solid #e2e8f0; border-radius:12px; font-size:1rem;"></textarea>
+                        </div>
+                        <button type="submit" style="background:var(--gradient); color:white; border:none; padding:15px 30px;
+                                border-radius:12px; font-weight:600; font-size:1rem; cursor:pointer; width:100%;">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="promised-footer">
-        <div class="footer-top">
-            <div class="container">
-                <div class="footer-grid-promised">
-                    <div class="footer-col-promised">
-                        <div class="footer-logo-promised">
-                            <div class="logo-visual-small">
-                                <div class="logo-mountain"></div>
-                            </div>
-                            <div>
-                                <h3>PROMISED LAND</h3>
-                                <p class="footer-tagline">Real Estate</p>
-                                <p class="footer-motto">Where your vision meets its address</p>
-                            </div>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo" style="margin-bottom:20px;">
+                        <div class="logo-icon" style="width:50px; height:50px;">
+                            <i class="fas fa-mountain-sun"></i>
                         </div>
-                        <p class="footer-description">
-                            Your trusted partner in finding the perfect property. 
-                            We connect dreams with addresses.
-                        </p>
-                        <div class="footer-social">
-                            <a href="#" class="social-link-promised"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" class="social-link-promised"><i class="fab fa-instagram"></i></a>
-                            <a href="#" class="social-link-promised"><i class="fab fa-twitter"></i></a>
-                            <a href="#" class="social-link-promised"><i class="fab fa-linkedin-in"></i></a>
+                        <div class="logo-text">
+                            <div class="logo-main">PROMISED LAND</div>
+                            <div class="logo-tagline" style="color:#FFEAA7;">REAL ESTATE</div>
                         </div>
                     </div>
-
-                    <div class="footer-col-promised">
-                        <h4>Quick Links</h4>
-                        <a href="#home"><i class="fas fa-chevron-right"></i> Home</a>
-                        <a href="#properties"><i class="fas fa-chevron-right"></i> Properties</a>
-                        <a href="#services"><i class="fas fa-chevron-right"></i> Services</a>
-                        <a href="#agents"><i class="fas fa-chevron-right"></i> Agents</a>
-                        <a href="#about"><i class="fas fa-chevron-right"></i> About Us</a>
-                    </div>
-
-                    <div class="footer-col-promised">
-                        <h4>Our Services</h4>
-                        <a href="#"><i class="fas fa-chevron-right"></i> Property Buying</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i> Property Selling</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i> Rental Services</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i> Legal Assistance</a>
-                        <a href="#"><i class="fas fa-chevron-right"></i> Investment Advisory</a>
-                    </div>
-
-                    <div class="footer-col-promised">
-                        <h4>Contact Info</h4>
-                        <div class="contact-info-footer">
-                            <p>
-                                <i class="fas fa-phone"></i>
-                                <a href="tel:+919080581547">+91 90805 81547</a>
-                            </p>
-                            <p>
-                                <i class="fas fa-envelope"></i>
-                                <a href="mailto:promisedland-j13@gmail.com">promisedland-j13@gmail.com</a>
-                            </p>
-                            <p>
-                                <i class="fas fa-globe"></i>
-                                <a href="https://promisedland.run.place" target="_blank">promisedland.run.place</a>
-                            </p>
-                            <p>
-                                <i class="fas fa-clock"></i>
-                                Mon-Sun: 9:00 AM - 9:00 PM
-                            </p>
-                        </div>
+                    <p style="color:rgba(255,255,255,0.7); margin-bottom:25px; line-height:1.6;">
+                        Your trusted partner in finding the perfect property. We connect dreams with addresses.
+                    </p>
+                    <div style="display:flex; gap:15px;">
+                        <a href="#" style="width:40px; height:40px; background:rgba(255,255,255,0.1); border-radius:50%;
+                           display:flex; align-items:center; justify-content:center; color:white; text-decoration:none;">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" style="width:40px; height:40px; background:rgba(255,255,255,0.1); border-radius:50%;
+                           display:flex; align-items:center; justify-content:center; color:white; text-decoration:none;">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" style="width:40px; height:40px; background:rgba(255,255,255,0.1); border-radius:50%;
+                           display:flex; align-items:center; justify-content:center; color:white; text-decoration:none;">
+                            <i class="fab fa-twitter"></i>
+                        </a>
                     </div>
                 </div>
+                
+                <div>
+                    <h4 style="font-size:1.2rem; margin-bottom:20px; position:relative; padding-bottom:10px;">
+                        Quick Links
+                        <div style="position:absolute; bottom:0; left:0; width:50px; height:3px; background:var(--gradient);"></div>
+                    </h4>
+                    <a href="#home" style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); 
+                       text-decoration:none; margin-bottom:12px;">
+                        <i class="fas fa-chevron-right" style="color:#FFEAA7;"></i> Home
+                    </a>
+                    <a href="#properties" style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); 
+                       text-decoration:none; margin-bottom:12px;">
+                        <i class="fas fa-chevron-right" style="color:#FFEAA7;"></i> Properties
+                    </a>
+                    <a href="#services" style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); 
+                       text-decoration:none; margin-bottom:12px;">
+                        <i class="fas fa-chevron-right" style="color:#FFEAA7;"></i> Services
+                    </a>
+                    <a href="#contact" style="display:flex; align-items:center; gap:10px; color:rgba(255,255,255,0.7); 
+                       text-decoration:none; margin-bottom:12px;">
+                        <i class="fas fa-chevron-right" style="color:#FFEAA7;"></i> Contact
+                    </a>
+                </div>
+                
+                <div>
+                    <h4 style="font-size:1.2rem; margin-bottom:20px; position:relative; padding-bottom:10px;">
+                        Contact Info
+                        <div style="position:absolute; bottom:0; left:0; width:50px; height:3px; background:var(--gradient);"></div>
+                    </h4>
+                    <p style="display:flex; align-items:center; gap:15px; color:rgba(255,255,255,0.7); margin-bottom:15px;">
+                        <i class="fas fa-phone" style="color:#FFEAA7;"></i>
+                        <a href="tel:+919080581547" style="color:#4ECDC4; text-decoration:none;">+91 90805 81547</a>
+                    </p>
+                    <p style="display:flex; align-items:center; gap:15px; color:rgba(255,255,255,0.7); margin-bottom:15px;">
+                        <i class="fas fa-envelope" style="color:#FFEAA7;"></i>
+                        <a href="mailto:promisedland-j13@gmail.com" style="color:#4ECDC4; text-decoration:none;">
+                            promisedland-j13@gmail.com
+                        </a>
+                    </p>
+                    <p style="display:flex; align-items:center; gap:15px; color:rgba(255,255,255,0.7); margin-bottom:15px;">
+                        <i class="fas fa-globe" style="color:#FFEAA7;"></i>
+                        <a href="https://promisedland.run.place" style="color:#4ECDC4; text-decoration:none;" target="_blank">
+                            promisedland.run.place
+                        </a>
+                    </p>
+                </div>
             </div>
-        </div>
-
-        <div class="footer-bottom">
-            <div class="container">
-                <p>&copy; 2024 Promised Land Real Estate. All rights reserved.</p>
-                <div class="footer-links">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
-                    <a href="#">Cookie Policy</a>
+            
+            <div style="border-top:1px solid rgba(255,255,255,0.1); margin-top:50px; padding-top:30px; 
+                 display:flex; justify-content:space-between; align-items:center;">
+                <p style="color:rgba(255,255,255,0.6); font-size:0.9rem;">
+                    &copy; 2024 Promised Land Real Estate. All rights reserved.
+                </p>
+                <div style="display:flex; gap:20px;">
+                    <a href="#" style="color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem;">Privacy Policy</a>
+                    <a href="#" style="color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.9rem;">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript Files -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
-    
-    <!-- Initialize Swiper -->
+    <!-- JavaScript -->
     <script>
-        // Initialize agents swiper
-        const swiper = new Swiper('.agents-slider', {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
+        // Hide loader
+        setTimeout(() => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+            }, 500);
+        }, 2000);
+        
+        // Properties Data - EMBEDDED IN HTML (No JSON file needed)
+        const properties = [
+            {
+                id: 1,
+                title: "Sunrise Luxury Villa",
+                address: "Palm Beach Road, Goa",
+                price: 25000000,
+                category: "luxury",
+                bedrooms: 5,
+                bathrooms: 4,
+                area: 3500,
+                image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Swimming Pool", "Garden", "Gym"]
             },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                },
-                1024: {
-                    slidesPerView: 3,
-                },
+            {
+                id: 2,
+                title: "SkyHigh Penthouse",
+                address: "Marine Drive, Mumbai",
+                price: 85000000,
+                category: "luxury",
+                bedrooms: 4,
+                bathrooms: 3,
+                area: 2800,
+                image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Sea View", "Private Terrace", "Smart Home"]
             },
+            {
+                id: 3,
+                title: "Green Valley Apartment",
+                address: "Whitefield, Bangalore",
+                price: 12500000,
+                category: "apartment",
+                bedrooms: 3,
+                bathrooms: 2,
+                area: 1800,
+                image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Clubhouse", "Play Area", "24/7 Security"]
+            },
+            {
+                id: 4,
+                title: "Prime Commercial Space",
+                address: "Connaught Place, Delhi",
+                price: 32000000,
+                category: "commercial",
+                area: 2200,
+                image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Central AC", "Elevator", "Parking"]
+            },
+            {
+                id: 5,
+                title: "Farmhouse Retreat",
+                address: "Lavasa, Pune",
+                price: 45000000,
+                category: "luxury",
+                bedrooms: 6,
+                bathrooms: 5,
+                area: 5000,
+                image: "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Private Pool", "Farm Land", "Mountain View"]
+            },
+            {
+                id: 6,
+                title: "Beachside Plot",
+                address: "Alibaug, Maharashtra",
+                price: 15000000,
+                category: "land",
+                area: 2400,
+                image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                amenities: ["Beach Access", "Road Facing", "Clear Title"]
+            }
+        ];
+        
+        // Load Properties
+        function loadProperties(category = 'all') {
+            const container = document.getElementById('properties-container');
+            let filtered = properties;
+            
+            if (category !== 'all') {
+                filtered = properties.filter(p => p.category === category);
+            }
+            
+            container.innerHTML = filtered.map(property => `
+                <div class="property-card">
+                    <div class="property-img">
+                        <img src="${property.image}" alt="${property.title}">
+                        <div style="position:absolute; top:20px; left:20px; background:linear-gradient(135deg, #FF6B6B, #4ECDC4); 
+                             color:white; padding:8px 15px; border-radius:20px; font-size:0.8rem; font-weight:600;">
+                            Featured
+                        </div>
+                    </div>
+                    <div class="property-content">
+                        <div class="property-price">
+                            ₹ ${formatPrice(property.price)}
+                        </div>
+                        <h3 class="property-title">${property.title}</h3>
+                        <p style="color:#7F8C8D; margin-bottom:20px; display:flex; align-items:center; gap:8px;">
+                            <i class="fas fa-map-marker-alt" style="color:#4ECDC4;"></i> ${property.address}
+                        </p>
+                        <div style="display:flex; gap:20px; margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #eee;">
+                            ${property.bedrooms ? `
+                                <div style="display:flex; align-items:center; gap:8px; color:#7F8C8D;">
+                                    <i class="fas fa-bed" style="color:#4ECDC4;"></i>
+                                    <span>${property.bedrooms} Beds</span>
+                                </div>
+                            ` : ''}
+                            ${property.bathrooms ? `
+                                <div style="display:flex; align-items:center; gap:8px; color:#7F8C8D;">
+                                    <i class="fas fa-bath" style="color:#4ECDC4;"></i>
+                                    <span>${property.bathrooms} Baths</span>
+                                </div>
+                            ` : ''}
+                            <div style="display:flex; align-items:center; gap:8px; color:#7F8C8D;">
+                                <i class="fas fa-ruler-combined" style="color:#4ECDC4;"></i>
+                                <span>${property.area} sq.ft</span>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap;">
+                            ${property.amenities.slice(0, 3).map(amenity => `
+                                <span style="background:rgba(78,205,196,0.1); color:#4ECDC4; padding:5px 10px; 
+                                      border-radius:15px; font-size:0.8rem; font-weight:500;">
+                                    ${amenity}
+                                </span>
+                            `).join('')}
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <button onclick="showPropertyDetails(${property.id})" 
+                                    style="flex:1; padding:12px; background:linear-gradient(135deg, #FF6B6B, #4ECDC4); 
+                                    color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer;">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button onclick="contactAboutProperty(${property.id})" 
+                                    style="flex:1; padding:12px; background:rgba(255,107,107,0.1); 
+                                    color:#FF6B6B; border:2px solid #FF6B6B; border-radius:8px; font-weight:600; cursor:pointer;">
+                                <i class="fas fa-phone"></i> Contact
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // Format price
+        function formatPrice(price) {
+            if (price >= 10000000) return (price / 10000000).toFixed(2) + ' Cr';
+            if (price >= 100000) return (price / 100000).toFixed(2) + ' L';
+            return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProperties();
+            
+            // Category buttons
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.dataset.category;
+                    
+                    document.querySelectorAll('.category-btn').forEach(b => {
+                        if (b === this) {
+                            b.style.background = 'linear-gradient(135deg, #FF6B6B, #4ECDC4)';
+                            b.style.color = 'white';
+                            b.style.border = '2px solid transparent';
+                        } else {
+                            b.style.background = 'white';
+                            b.style.color = '#7F8C8D';
+                            b.style.border = '2px solid #e2e8f0';
+                        }
+                    });
+                    
+                    loadProperties(category);
+                });
+            });
+            
+            // Search tabs
+            document.querySelectorAll('.search-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.search-tab').forEach(t => {
+                        if (t === this) {
+                            t.style.background = 'linear-gradient(135deg, #FF6B6B, #4ECDC4)';
+                            t.style.color = 'white';
+                        } else {
+                            t.style.background = '#F0F4F8';
+                            t.style.color = '#7F8C8D';
+                        }
+                    });
+                });
+            });
+            
+            // Contact form
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will contact you soon.');
+                this.reset();
+            });
         });
+        
+        // Property details modal
+        function showPropertyDetails(id) {
+            const property = properties.find(p => p.id === id);
+            if (!property) return;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); display: flex; align-items: center;
+                justify-content: center; z-index: 10000; padding: 20px;
+            `;
+            
+            modal.innerHTML = `
+                <div style="background: white; border-radius: 20px; padding: 40px; max-width: 800px;
+                     max-height: 90vh; overflow-y: auto; position: relative; width: 100%;">
+                    <button onclick="this.parentElement.parentElement.remove()" 
+                            style="position: absolute; top: 20px; right: 20px; background: none;
+                            border: none; font-size: 2rem; color: #2c3e50; cursor: pointer;">×</button>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                        <div>
+                            <img src="${property.image}" alt="${property.title}" 
+                                 style="width: 100%; border-radius: 12px; margin-bottom: 20px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                ${property.bedrooms ? `
+                                    <div style="text-align: center; padding: 15px; background: #f8f9ff; border-radius: 12px;">
+                                        <i class="fas fa-bed" style="color: #4ECDC4; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                                        <div style="font-weight: 600;">${property.bedrooms} Bedrooms</div>
+                                    </div>
+                                ` : ''}
+                                ${property.bathrooms ? `
+                                    <div style="text-align: center; padding: 15px; background: #f8f9ff; border-radius: 12px;">
+                                        <i class="fas fa-bath" style="color: #4ECDC4; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                                        <div style="font-weight: 600;">${property.bathrooms} Bathrooms</div>
+                                    </div>
+                                ` : ''}
+                                <div style="text-align: center; padding: 15px; background: #f8f9ff; border-radius: 12px;">
+                                    <i class="fas fa-ruler-combined" style="color: #4ECDC4; font-size: 1.5rem; margin-bottom: 10px;"></i>
+                                    <div style="font-weight: 600;">${property.area} sq.ft</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h2 style="margin-top: 0; font-size: 2rem; margin-bottom: 10px;">${property.title}</h2>
+                            <p style="color: #7F8C8D; margin-bottom: 20px;">
+                                <i class="fas fa-map-marker-alt"></i> ${property.address}
+                            </p>
+                            
+                            <div style="background: linear-gradient(135deg, #FF6B6B, #4ECDC4); color: white;
+                                 padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+                                <div style="font-size: 0.9rem; opacity: 0.9;">Price</div>
+                                <div style="font-size: 2.5rem; font-weight: 800;">₹ ${formatPrice(property.price)}</div>
+                            </div>
+                            
+                            <h3 style="margin-bottom: 15px;">Amenities</h3>
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 30px;">
+                                ${property.amenities.map(amenity => `
+                                    <span style="background: rgba(78,205,196,0.1); color: #4ECDC4; 
+                                          padding: 8px 15px; border-radius: 20px; font-weight: 500;">
+                                        ${amenity}
+                                    </span>
+                                `).join('')}
+                            </div>
+                            
+                            <div style="display: flex; gap: 15px;">
+                                <a href="tel:+919080581547" 
+                                   style="flex: 1; text-align: center; background: #FF6B6B; color: white;
+                                   padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 600;">
+                                    <i class="fas fa-phone"></i> Call Now
+                                </a>
+                                <a href="https://wa.me/919080581547" target="_blank"
+                                   style="flex: 1; text-align: center; background: #25D366; color: white;
+                                   padding: 15px; border-radius: 12px; text-decoration: none; font-weight: 600;">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Close on outside click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.remove();
+                }
+            });
+        }
+        
+        // Contact about property
+        function contactAboutProperty(id) {
+            window.location.href = `tel:+919080581547`;
+        }
+        
+        // Make functions globally available
+        window.showPropertyDetails = showPropertyDetails;
+        window.contactAboutProperty = contactAboutProperty;
     </script>
 </body>
 </html>
