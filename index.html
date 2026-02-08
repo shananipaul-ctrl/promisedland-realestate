@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>PROMISEDLAND REAL ESTATE | AI Real Estate Tamil Nadu</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b1020;--card:#11183a;--pri:#f5c16c;--sec:#6aa6ff;--txt:#e9ecff;--mut:#9aa3ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Poppins;background:var(--bg);color:var(--txt)}
+header{position:sticky;top:0;background:#0b1020;z-index:9}
+.wrap{max-width:1200px;margin:auto;padding:16px}
+.logo h1{font-family:Cinzel;color:var(--pri)}
+nav a{color:#fff;margin:0 10px;text-decoration:none}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none}
+.btn{background:var(--pri);border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
+.btn.alt{background:#222;color:#fff}
+.hide{display:none}
+footer{text-align:center;opacity:.8}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+<div class="logo"><h1>PROMISED LAND<br>REAL ESTATE</h1></div>
+<div>
+<select id="langSelect">
+<option value="en">English</option>
+<option value="ta">தமிழ்</option>
+</select>
+<nav>
+<a href="#search">Search</a>
+<a href="#post">Post</a>
+<a href="#ai">AI</a>
+<a href="#admin">Admin</a>
+</nav>
+</div>
+</div>
+</header>
+
+<section class="wrap card">
+<h2 id="heroTitle">Where Trust Meets Land</h2>
+<p id="heroSub">Buy • Sell • Rent properties across Tamil Nadu</p>
+<div class="grid">
+<button class="btn" onclick="setMode('Buy')">Buy</button>
+<button class="btn alt" onclick="setMode('Sell')">Sell</button>
+<button class="btn alt" onclick="setMode('Rent')">Rent</button>
+</div>
+</section>
+
+<section id="search" class="wrap card">
+<h3>Property Search</h3>
+<div class="grid">
+<input id="sLocation" placeholder="Village / District" />
+<select id="sType"><option>Plot</option><option>House</option><option>Villa</option></select>
+<input id="sBudget" placeholder="Max Budget" />
+<button class="btn" onclick="searchProperty()">Search</button>
+</div>
+<div id="searchResults"></div>
+</section>
+
+<section id="post" class="wrap card">
+<h3>Post Property (Public)</h3>
+<div class="grid">
+<input id="pTitle" placeholder="Title" />
+<input id="pPrice" placeholder="Price" />
+<input id="pVillage" placeholder="Village" />
+<input id="pMobile" placeholder="Mobile Number" />
+<textarea id="pDesc" placeholder="Description"></textarea>
+<button class="btn" onclick="postProperty()">Submit</button>
+</div>
+</section>
+
+<section id="ai" class="wrap card">
+<h3>🤖 AI Assistant</h3>
+<input id="aiQ" placeholder="Ask about property" />
+<button class="btn" onclick="askAI()">Ask</button>
+<div id="aiAns"></div>
+</section>
+
+<section id="admin" class="wrap card">
+<h3>Admin Approval</h3>
+<input id="adminPass" type="password" placeholder="Admin Password" />
+<button class="btn" onclick="adminLogin()">Login</button>
+<div id="adminPanel" class="hide"></div>
+</section>
+
+<section class="wrap card">
+<h3>Support Us</h3>
+<button class="btn" onclick="document.getElementById('donate').classList.toggle('hide')">Donate</button>
+<div id="donate" class="hide">
+<p>GPay: yirehmex-1@okhdfcbank</p>
+<p><a href="https://paypal.me/ShanmugaveluV" target="_blank">PayPal</a></p>
+</div>
+</section>
+
+<footer class="wrap">
+<p>📧 rera.promizedland@gmail.com | 📞 +91 90805 81547</p>
+</footer>
+
+<script>
+/******** LANGUAGE ********/
+const langData={
+ en:{title:'Where Trust Meets Land',sub:'Buy • Sell • Rent properties across Tamil Nadu'},
+ ta:{title:'உங்கள் கனவு நிலத்தின் முகவரி',sub:'தமிழ்நாடு முழுவதும் வாங்க, விற்க, வாடகைக்கு'}
+}
+langSelect.onchange=()=>{heroTitle.innerText=langData[langSelect.value].title;heroSub.innerText=langData[langSelect.value].sub}
+
+/******** MODE ********/
+let mode='Buy';function setMode(m){mode=m;alert('Mode: '+m)}
+
+/******** SEARCH (DEMO DB) ********/
+let db=[];
+function searchProperty(){
+ const res=db.filter(p=>p.village.includes(sLocation.value));
+ searchResults.innerHTML=res.map(p=>`<div class='card'><b>${p.title}</b><br>${p.price}<br>${p.village}</div>`).join('')||'No results';
+}
+
+/******** POST ********/
+function postProperty(){
+ if(!pMobile.value){alert('Mobile required');return}
+ const prop={title:pTitle.value,price:pPrice.value,village:pVillage.value,desc:pDesc.value,approved:false};
+ db.push(prop);
+ window.open(`https://wa.me/919080581547?text=New%20Property%20${pTitle.value}%20${pPrice.value}%20${pMobile.value}`,'_blank');
+ alert('Posted. Await admin approval');
+}
+
+/******** AI (PLACEHOLDER) ********/
+function askAI(){aiAns.innerText='AI analysing price & village trends...'}
+
+/******** ADMIN ********/
+function adminLogin(){
+ if(adminPass.value==='admin123'){adminPanel.classList.remove('hide');adminPanel.innerHTML=db.map((p,i)=>`<div>${p.title} <button onclick="approve(${i})">Approve</button></div>`).join('')}
+}
+function approve(i){db[i].approved=true;alert('Approved')}
+
+/******** BACKEND (NODE.JS SAMPLE) ********/
+/*
+server.js
+const express=require('express');const app=express();
+app.use(express.json());
+let properties=[];
+app.post('/api/post',(req,res)=>{properties.push(req.body);res.send('ok')});
+app.get('/api/search',(req,res)=>res.json(properties));
+app.listen(3000);
+*/
+</script>
+</body>
+</html>
