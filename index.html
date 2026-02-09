@@ -3,150 +3,238 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PROMISEDLAND REAL ESTATE | AI Real Estate Tamil Nadu</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<title>PromisedLand Real Estate | Tamil Nadu</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#0b1020;--card:#11183a;--pri:#f5c16c;--sec:#6aa6ff;--txt:#e9ecff;--mut:#9aa3ff}
+:root{
+  --bg:#0b1020;--card:#11183a;--pri:#f5c16c;--txt:#e9ecff;
+}
 *{box-sizing:border-box}
 body{margin:0;font-family:Poppins;background:var(--bg);color:var(--txt)}
-header{position:sticky;top:0;background:#0b1020;z-index:9}
 .wrap{max-width:1200px;margin:auto;padding:16px}
-.logo h1{font-family:Cinzel;color:var(--pri)}
-nav a{color:#fff;margin:0 10px;text-decoration:none}
-.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px}
+.card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none}
-.btn{background:var(--pri);border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:600}
-.btn.alt{background:#222;color:#fff}
+input,select,textarea,button{width:100%;padding:10px;border-radius:8px;border:none}
+button{background:var(--pri);font-weight:600;cursor:pointer}
+.property{border:1px solid #2a3470;padding:12px;border-radius:10px}
+small{opacity:.8}
 .hide{display:none}
-footer{text-align:center;opacity:.8}
 </style>
 </head>
+
 <body>
-<header>
-<div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
-<div class="logo"><h1>PROMISED LAND<br>REAL ESTATE</h1></div>
-<div>
-<select id="langSelect">
-<option value="en">English</option>
-<option value="ta">தமிழ்</option>
+
+<div class="wrap">
+<h1>🏡 PromisedLand Real Estate</h1>
+<p>Buy • Sell • Rent across Tamil Nadu</p>
+</div>
+
+<!-- 🔍 SEARCH -->
+<div class="wrap card">
+<h3>🔍 Search Properties</h3>
+<div class="grid">
+<select id="sMode">
+  <option value="">Buy / Rent / Sell</option>
+  <option>Buy</option>
+  <option>Rent</option>
+  <option>Sell</option>
 </select>
-<nav>
-<a href="#search">Search</a>
-<a href="#post">Post</a>
-<a href="#ai">AI</a>
-<a href="#admin">Admin</a>
-</nav>
-</div>
-</div>
-</header>
 
-<section class="wrap card">
-<h2 id="heroTitle">Where Trust Meets Land</h2>
-<p id="heroSub">Buy • Sell • Rent properties across Tamil Nadu</p>
-<div class="grid">
-<button class="btn" onclick="setMode('Buy')">Buy</button>
-<button class="btn alt" onclick="setMode('Sell')">Sell</button>
-<button class="btn alt" onclick="setMode('Rent')">Rent</button>
-</div>
-</section>
+<select id="sCategory">
+  <option value="">Property Type</option>
+  <option>Plot</option>
+  <option>Agriculture</option>
+  <option>House</option>
+  <option>Apartment</option>
+  <option>Industry</option>
+  <option>Shop</option>
+</select>
 
-<section id="search" class="wrap card">
-<h3>Property Search</h3>
-<div class="grid">
-<input id="sLocation" placeholder="Village / District" />
-<select id="sType"><option>Plot</option><option>House</option><option>Villa</option></select>
-<input id="sBudget" placeholder="Max Budget" />
-<button class="btn" onclick="searchProperty()">Search</button>
-</div>
-<div id="searchResults"></div>
-</section>
+<select id="sDistrict"></select>
+<select id="sVillage"></select>
 
-<section id="post" class="wrap card">
-<h3>Post Property (Public)</h3>
+<button onclick="loadProperties()">Search</button>
+</div>
+
+<div id="results" class="grid"></div>
+</div>
+
+<!-- 📝 POST PROPERTY -->
+<div class="wrap card">
+<h3>📝 Post Property</h3>
 <div class="grid">
-<input id="pTitle" placeholder="Title" />
-<input id="pPrice" placeholder="Price" />
-<input id="pVillage" placeholder="Village" />
+<input id="oName" placeholder="Owner / Company Name" />
 <input id="pMobile" placeholder="Mobile Number" />
+
+<select id="pMode">
+  <option>Buy</option>
+  <option>Rent</option>
+  <option>Sell</option>
+</select>
+
+<select id="pCategory">
+  <option>Plot</option>
+  <option>Agriculture</option>
+  <option>House</option>
+  <option>Apartment</option>
+  <option>Industry</option>
+  <option>Shop</option>
+</select>
+
+<select id="pDistrict"></select>
+<select id="pVillage"></select>
+
+<input id="pPrice" type="number" placeholder="Price" />
 <textarea id="pDesc" placeholder="Description"></textarea>
-<button class="btn" onclick="postProperty()">Submit</button>
+
+<button onclick="postProperty()">Submit Property</button>
 </div>
-</section>
-
-<section id="ai" class="wrap card">
-<h3>🤖 AI Assistant</h3>
-<input id="aiQ" placeholder="Ask about property" />
-<button class="btn" onclick="askAI()">Ask</button>
-<div id="aiAns"></div>
-</section>
-
-<section id="admin" class="wrap card">
-<h3>Admin Approval</h3>
-<input id="adminPass" type="password" placeholder="Admin Password" />
-<button class="btn" onclick="adminLogin()">Login</button>
-<div id="adminPanel" class="hide"></div>
-</section>
-
-<section class="wrap card">
-<h3>Support Us</h3>
-<button class="btn" onclick="document.getElementById('donate').classList.toggle('hide')">Donate</button>
-<div id="donate" class="hide">
-<p>GPay: yirehmex-1@okhdfcbank</p>
-<p><a href="https://paypal.me/ShanmugaveluV" target="_blank">PayPal</a></p>
 </div>
-</section>
 
-<footer class="wrap">
-<p>📧 rera.promizedland@gmail.com | 📞 +91 90805 81547</p>
-</footer>
+<!-- 🤖 AI PRICE (UI READY) -->
+<div class="wrap card">
+<h3>🤖 AI Land Price Prediction</h3>
+<input id="aiArea" placeholder="Area (sqft / cents)" />
+<select id="aiDistrict"></select>
+<button onclick="predictPrice()">Predict Price</button>
+<p id="aiResult"></p>
+</div>
+
+<!-- 🔐 ADMIN -->
+<div class="wrap card">
+<h3>🔐 Admin Approval</h3>
+<input id="adminPass" type="password" placeholder="Admin password" />
+<button onclick="adminLogin()">Login</button>
+<div id="adminPanel"></div>
+</div>
 
 <script>
-/******** LANGUAGE ********/
-const langData={
- en:{title:'Where Trust Meets Land',sub:'Buy • Sell • Rent properties across Tamil Nadu'},
- ta:{title:'உங்கள் கனவு நிலத்தின் முகவரி',sub:'தமிழ்நாடு முழுவதும் வாங்க, விற்க, வாடகைக்கு'}
+/* ================= CONFIG ================= */
+const API = "https://promisedland-realestate.onrender.com";
+
+/* ================= TN DISTRICTS + VILLAGES ================= */
+const districts = {
+"Ariyalur":["Ariyalur","Sendurai"],
+"Chennai":["T Nagar","Velachery","Tambaram"],
+"Coimbatore":["Pollachi","Mettupalayam"],
+"Cuddalore":["Chidambaram","Panruti"],
+"Dharmapuri":["Palacode","Harur"],
+"Dindigul":["Palani","Oddanchatram"],
+"Erode":["Bhavani","Perundurai"],
+"Kallakurichi":["Ulundurpet"],
+"Kanchipuram":["Sriperumbudur"],
+"Kanyakumari":["Nagercoil","Colachel"],
+"Karur":["Kulithalai"],
+"Krishnagiri":["Hosur"],
+"Madurai":["Melur","Thirumangalam"],
+"Mayiladuthurai":["Mayiladuthurai"],
+"Nagapattinam":["Vedaranyam"],
+"Namakkal":["Rasipuram"],
+"Nilgiris":["Ooty","Coonoor"],
+"Perambalur":["Perambalur"],
+"Pudukkottai":["Alangudi"],
+"Ramanathapuram":["Paramakudi"],
+"Ranipet":["Arakkonam"],
+"Salem":["Attur","Mettur"],
+"Sivaganga":["Karaikudi"],
+"Tenkasi":["Sankarankovil"],
+"Thanjavur":["Kumbakonam"],
+"Theni":["Bodinayakanur"],
+"Thoothukudi":["Tuticorin"],
+"Tiruchirappalli":["Srirangam"],
+"Tirunelveli":["Palayamkottai"],
+"Tirupathur":["Vaniyambadi"],
+"Tiruppur":["Avinashi"],
+"Tiruvallur":["Avadi"],
+"Tiruvannamalai":["Cheyyar"],
+"Tiruvarur":["Mannargudi"],
+"Vellore":["Katpadi"],
+"Viluppuram":["Gingee"],
+"Virudhunagar":["Rajapalayam"]
+};
+
+function loadDistricts(sel){
+  sel.innerHTML='<option value="">Select District</option>';
+  Object.keys(districts).forEach(d=>sel.innerHTML+=`<option>${d}</option>`);
 }
-langSelect.onchange=()=>{heroTitle.innerText=langData[langSelect.value].title;heroSub.innerText=langData[langSelect.value].sub}
 
-/******** MODE ********/
-let mode='Buy';function setMode(m){mode=m;alert('Mode: '+m)}
-
-/******** SEARCH (DEMO DB) ********/
-let db=[];
-function searchProperty(){
- const res=db.filter(p=>p.village.includes(sLocation.value));
- searchResults.innerHTML=res.map(p=>`<div class='card'><b>${p.title}</b><br>${p.price}<br>${p.village}</div>`).join('')||'No results';
+function loadVillages(dSel,vSel){
+  vSel.innerHTML='<option value="">Select Village</option>';
+  (districts[dSel.value]||[]).forEach(v=>vSel.innerHTML+=`<option>${v}</option>`);
 }
 
-/******** POST ********/
-function postProperty(){
- if(!pMobile.value){alert('Mobile required');return}
- const prop={title:pTitle.value,price:pPrice.value,village:pVillage.value,desc:pDesc.value,approved:false};
- db.push(prop);
- window.open(`https://wa.me/919080581547?text=New%20Property%20${pTitle.value}%20${pPrice.value}%20${pMobile.value}`,'_blank');
- alert('Posted. Await admin approval');
+/* Init selects */
+[sDistrict,pDistrict,aiDistrict].forEach(loadDistricts);
+sDistrict.onchange=()=>loadVillages(sDistrict,sVillage);
+pDistrict.onchange=()=>loadVillages(pDistrict,pVillage);
+
+/* ================= LOAD PROPERTIES ================= */
+async function loadProperties(){
+  const res = await fetch(API+"/properties");
+  const data = await res.json();
+  results.innerHTML='';
+
+  data
+  .filter(p=>
+    (!sMode.value||p.type===sMode.value) &&
+    (!sCategory.value||p.category===sCategory.value) &&
+    (!sDistrict.value||p.district===sDistrict.value) &&
+    (!sVillage.value||p.village===sVillage.value)
+  )
+  .forEach(p=>{
+    results.innerHTML+=`
+    <div class="property">
+      <b>${p.title}</b><br>
+      ${p.category} • ${p.type}<br>
+      ${p.village}, ${p.district}<br>
+      ₹${p.price}<br>
+      📞 ${p.mobile}<br><br>
+      <a href="https://wa.me/91${p.mobile}?text=Interested in ${p.title}" target="_blank">
+        <button>WhatsApp Enquiry</button>
+      </a>
+    </div>`;
+  });
 }
 
-/******** AI (PLACEHOLDER) ********/
-function askAI(){aiAns.innerText='AI analysing price & village trends...'}
+/* ================= POST PROPERTY ================= */
+async function postProperty(){
+  const body={
+    title:oName.value,
+    mobile:pMobile.value,
+    type:pMode.value,
+    category:pCategory.value,
+    district:pDistrict.value,
+    village:pVillage.value,
+    price:pPrice.value,
+    description:pDesc.value
+  };
 
-/******** ADMIN ********/
+  await fetch(API+"/properties",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body)
+  });
+
+  alert("Property submitted. Await admin approval.");
+}
+
+/* ================= AI PRICE (PLACEHOLDER) ================= */
+function predictPrice(){
+  aiResult.innerText="Estimated price: ₹"+(aiArea.value*3500||"—")+" (AI demo)";
+}
+
+/* ================= ADMIN ================= */
 function adminLogin(){
- if(adminPass.value==='admin123'){adminPanel.classList.remove('hide');adminPanel.innerHTML=db.map((p,i)=>`<div>${p.title} <button onclick="approve(${i})">Approve</button></div>`).join('')}
+  if(adminPass.value==="admin123"){
+    adminPanel.innerHTML="<p>Admin logged in. Approval UI coming.</p>";
+  }
 }
-function approve(i){db[i].approved=true;alert('Approved')}
 
-/******** BACKEND (NODE.JS SAMPLE) ********/
-/*
-server.js
-const express=require('express');const app=express();
-app.use(express.json());
-let properties=[];
-app.post('/api/post',(req,res)=>{properties.push(req.body);res.send('ok')});
-app.get('/api/search',(req,res)=>res.json(properties));
-app.listen(3000);
-*/
+/* Initial load */
+loadProperties();
 </script>
+
 </body>
 </html>
