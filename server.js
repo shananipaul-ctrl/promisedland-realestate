@@ -39,13 +39,20 @@ app.get("/", (req, res) => {
 });
 
 /* ======================
-   GET APPROVED PROPERTIES
+   GET PROPERTIES
+   ?approved=true|false
 ====================== */
 app.get("/properties", async (req, res) => {
   try {
-    const snapshot = await db
-      .collection("properties")
-      .where("approved", "==", true)
+    const approved = req.query.approved;
+
+    let query = db.collection("properties");
+
+    if (approved !== undefined) {
+      query = query.where("approved", "==", approved === "true");
+    }
+
+    const snapshot = await query
       .orderBy("createdAt", "desc")
       .get();
 
@@ -68,14 +75,14 @@ app.post("/properties", async (req, res) => {
     const data = {
       name: req.body.name || "",                 // Person / Company
       mobile: req.body.mobile,
-      title: req.body.title,
+      title: req.body.title,                     // Area / Title
       type: req.body.type || "sell",             // buy / rent / sell
       category: req.body.category || "plot",     // plot / house / etc
       district: req.body.district || "",
       village: req.body.village || "",
       price: Number(req.body.price),
       description: req.body.description || "",
-      approved: false,                           // 🔴 ADMIN MUST APPROVE
+      approved: false,                           // 🔴 ADMIN APPROVAL
       createdAt: new Date()
     };
 
@@ -84,7 +91,12 @@ app.post("/properties", async (req, res) => {
     }
 
     const ref = await db.collection("properties").add(data);
-    res.json({ success: true, id: ref.id });
+
+    res.json({
+      success: true,
+      message: "Property submitted. Await admin approval.",
+      id: ref.id
+    });
 
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -114,31 +126,18 @@ app.get("/admin/pending", async (req, res) => {
 });
 
 /* ======================
-   ADMIN – APPROVE
+   ADMIN – APPROVE PROPERTY
 ====================== */
 app.post("/admin/approve/:id", async (req, res) => {
   try {
-    const { id } = req.params;
+    await db.collection("properties")
+      .doc(req.params.id)
+      .update({ approved: true });
 
-    await db.collection("properties").doc(id).update({
-      approved: true
-    });
-
-    res.json({ success: true });
+    res.json({ success: true, message: "Property approved" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-});
-app.get("/properties", async (req, res) => {
-  const approved = req.query.approved;
-
-  let query = db.collection("properties");
-  if (approved !== undefined) {
-    query = query.where("approved", "==", approved === "true");
-  }
-
-  const snap = await query.orderBy("createdAt", "desc").get();
-  res.json(snap.docs.map(d => ({ id: d.id, ...d.data() })));
 });
 
 /* ======================
@@ -147,9 +146,4 @@ app.get("/properties", async (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
-});
-app.post("/properties/:id/approve", async (req,res)=>{
- await db.collection("properties").doc(req.params.id)
- .update({approved:true});
- res.send("ok");
 });
