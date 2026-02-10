@@ -1,47 +1,46 @@
-// ===============================
-// PROMISED LAND – FULL BACKEND
-// ===============================
+/***********************
+ * PROMISEDLAND BACKEND
+ * Render + Firebase
+ ***********************/
 
-// ---------- IMPORTS ----------
 const express = require("express");
 const cors = require("cors");
 const admin = require("firebase-admin");
-const multer = require("multer");
 
-// ---------- EXPRESS APP ----------
-const app = express();
-app.use(cors());
-app.use(express.json());
+/* ======================
+   FIREBASE INIT (ENV)
+====================== */
+if (!process.env.FIREBASE_KEY) {
+  throw new Error("❌ FIREBASE_KEY env variable not found");
+}
 
-// ---------- FIREBASE ADMIN ----------
 const serviceAccount = JSON.parse(
   Buffer.from(process.env.FIREBASE_KEY, "base64").toString("utf8")
 );
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  storageBucket: `${serviceAccount.project_id}.appspot.com`
+  credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket();
 
-// ---------- MULTER (IMAGE UPLOAD) ----------
-const upload = multer({
-  storage: multer.memoryStorage(),
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
-});
+/* ======================
+   APP INIT
+====================== */
+const app = express();
+app.use(cors());
+app.use(express.json());
 
-// ===============================
-// TEST ROUTE
-// ===============================
+/* ======================
+   HEALTH CHECK
+====================== */
 app.get("/", (req, res) => {
-  res.send("✅ PromisedLand Backend is Running 🚀");
+  res.send("PromisedLand Backend is Running 🚀");
 });
 
-// ===============================
-// GET APPROVED PROPERTIES (PUBLIC)
-// ===============================
+/* ======================
+   GET APPROVED PROPERTIES
+====================== */
 app.get("/properties", async (req, res) => {
   try {
     const snapshot = await db
@@ -61,23 +60,22 @@ app.get("/properties", async (req, res) => {
   }
 });
 
-// ===============================
-// ADD NEW PROPERTY (PUBLIC POST)
-// ===============================
+/* ======================
+   ADD PROPERTY (PUBLIC)
+====================== */
 app.post("/properties", async (req, res) => {
   try {
     const data = {
-      name: req.body.name || "",
-      title: req.body.title,
-      type: req.body.type || "Sell", // Buy / Sell / Rent
-      category: req.body.category || "Plot",
-      district: req.body.district,
-      village: req.body.village,
-      price: Number(req.body.price),
+      name: req.body.name || "",                 // Person / Company
       mobile: req.body.mobile,
+      title: req.body.title,
+      type: req.body.type || "sell",             // buy / rent / sell
+      category: req.body.category || "plot",     // plot / house / etc
+      district: req.body.district || "",
+      village: req.body.village || "",
+      price: Number(req.body.price),
       description: req.body.description || "",
-      image: req.body.image || "",
-      approved: false, // 🔐 ADMIN APPROVAL REQUIRED
+      approved: false,                           // 🔴 ADMIN MUST APPROVE
       createdAt: new Date()
     };
 
@@ -93,39 +91,14 @@ app.post("/properties", async (req, res) => {
   }
 });
 
-// ===============================
-// IMAGE UPLOAD (FIREBASE STORAGE)
-// ===============================
-app.post("/upload", upload.single("image"), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: "No image uploaded" });
-    }
-
-    const fileName = `property-images/${Date.now()}_${req.file.originalname}`;
-    const file = bucket.file(fileName);
-
-    await file.save(req.file.buffer, {
-      metadata: { contentType: req.file.mimetype }
-    });
-
-    await file.makePublic();
-
-    const imageUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
-    res.json({ imageUrl });
-
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ===============================
-// ADMIN – VIEW ALL (APPROVED + PENDING)
-// ===============================
-app.get("/admin/properties", async (req, res) => {
+/* ======================
+   ADMIN – GET PENDING
+====================== */
+app.get("/admin/pending", async (req, res) => {
   try {
     const snapshot = await db
       .collection("properties")
+      .where("approved", "==", false)
       .orderBy("createdAt", "desc")
       .get();
 
@@ -140,15 +113,16 @@ app.get("/admin/properties", async (req, res) => {
   }
 });
 
-// ===============================
-// ADMIN – APPROVE PROPERTY
-// ===============================
+/* ======================
+   ADMIN – APPROVE
+====================== */
 app.post("/admin/approve/:id", async (req, res) => {
   try {
-    await db
-      .collection("properties")
-      .doc(req.params.id)
-      .update({ approved: true });
+    const { id } = req.params;
+
+    await db.collection("properties").doc(id).update({
+      approved: true
+    });
 
     res.json({ success: true });
   } catch (err) {
@@ -156,21 +130,9 @@ app.post("/admin/approve/:id", async (req, res) => {
   }
 });
 
-// ===============================
-// ADMIN – DELETE PROPERTY
-// ===============================
-app.delete("/admin/delete/:id", async (req, res) => {
-  try {
-    await db.collection("properties").doc(req.params.id).delete();
-    res.json({ success: true });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// ===============================
-// START SERVER
-// ===============================
+/* ======================
+   SERVER START
+====================== */
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
