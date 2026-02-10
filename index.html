@@ -3,208 +3,176 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PROMISEDLAND REAL ESTATE | Tamil Nadu</title>
+<title>Promised Land Real Estate</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --bg:#0b1020;--card:#11183a;--pri:#f5c16c;--txt:#e9ecff;
-}
-*{box-sizing:border-box}
-body{margin:0;font-family:Poppins;background:var(--bg);color:var(--txt)}
-header{position:sticky;top:0;background:#0b1020;z-index:9}
+body{margin:0;font-family:Poppins;background:#0b1020;color:#fff}
+header{background:#0b1020;position:sticky;top:0}
 .wrap{max-width:1200px;margin:auto;padding:16px}
-.logo h1{font-family:Cinzel;color:var(--pri);line-height:1}
-nav a{color:#fff;margin:0 10px;text-decoration:none}
-.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.card{background:#11183a;border-radius:14px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
 input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none}
-.btn{background:var(--pri);border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer}
-.btn.alt{background:#222;color:#fff}
-footer{text-align:center;opacity:.8;margin:30px 0}
+button{background:#f5c16c;border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer}
+.hide{display:none}
+.property{border-bottom:1px solid #333;padding:10px 0}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
-    <div class="logo">
-      <h1>PROMISED LAND<br>REAL ESTATE</h1>
-    </div>
-    <nav>
-      <a href="#search">Search</a>
-      <a href="#post">Post</a>
-    </nav>
-  </div>
+<div class="wrap" style="display:flex;align-items:center;gap:16px">
+<img src="logo.png" height="60">
+<h2>Promised Land Real Estate</h2>
+</div>
 </header>
 
-<section class="wrap card">
-  <h2>Where Trust Meets Land</h2>
-  <p>Buy • Sell • Rent properties across Tamil Nadu</p>
-</section>
-
 <!-- SEARCH -->
-<section id="search" class="wrap card">
-  <h3>🔍 Property Search</h3>
-  <div class="grid">
-    <select id="sMode">
-      <option value="">Buy / Rent / Sell</option>
-      <option>Buy</option>
-      <option>Sell</option>
-      <option>Rent</option>
-    </select>
+<section class="wrap card">
+<h3>Search Property</h3>
+<div class="grid">
+<select id="filterType">
+<option value="">Buy / Sell / Rent</option>
+<option value="buy">Buy</option>
+<option value="sell">Sell</option>
+<option value="rent">Rent</option>
+</select>
 
-    <select id="sCategory">
-      <option value="">Property Type</option>
-      <option>Plot</option>
-      <option>Agriculture</option>
-      <option>House</option>
-      <option>Apartment</option>
-      <option>Industry</option>
-      <option>Shop</option>
-    </select>
+<select id="filterCategory">
+<option value="">Property Type</option>
+<option>Plot</option>
+<option>Agriculture</option>
+<option>House</option>
+<option>Apartment</option>
+<option>Industry</option>
+<option>Shop</option>
+</select>
 
-    <select id="sDistrict"></select>
+<input id="filterDistrict" placeholder="District">
+<button onclick="loadProperties()">Search</button>
+</div>
 
-    <input id="sVillage" placeholder="Village (optional)" />
-
-    <button class="btn" onclick="searchProperty()">Search</button>
-  </div>
-
-  <div id="searchResults"></div>
+<div id="results"></div>
 </section>
 
-<!-- POST -->
-<section id="post" class="wrap card">
-  <h3>📤 Post Property</h3>
-  <div class="grid">
-    <input id="pName" placeholder="Name (Person / Company)" />
-    <input id="pMobile" placeholder="Mobile Number" />
-    <input id="pTitle" placeholder="Property Title" />
-    <input id="pPrice" placeholder="Price" />
+<!-- POST PROPERTY -->
+<section class="wrap card">
+<h3>Post Property</h3>
 
-    <select id="pMode">
-      <option>Buy</option>
-      <option>Sell</option>
-      <option>Rent</option>
-    </select>
+<div class="grid">
+<input id="name" placeholder="Person / Company Name">
+<input id="mobile" placeholder="Mobile Number">
 
-    <select id="pCategory">
-      <option>Plot</option>
-      <option>Agriculture</option>
-      <option>House</option>
-      <option>Apartment</option>
-      <option>Industry</option>
-      <option>Shop</option>
-    </select>
+<select id="ptype">
+<option value="sell">Sell</option>
+<option value="buy">Buy</option>
+<option value="rent">Rent</option>
+</select>
 
-    <select id="pDistrict"></select>
-    <input id="pVillage" placeholder="Village" />
-    <textarea id="pDesc" placeholder="Description"></textarea>
+<select id="category">
+<option>Plot</option>
+<option>Agriculture</option>
+<option>House</option>
+<option>Apartment</option>
+<option>Industry</option>
+<option>Shop</option>
+</select>
 
-    <button class="btn" onclick="postProperty()">Submit Property</button>
-  </div>
+<input id="district" placeholder="District">
+<input id="village" placeholder="Village">
+
+<input id="area" placeholder="Area (Sqft / Cent / Acre)">
+<input id="price" placeholder="Price">
+
+<input type="file" id="image">
+
+<textarea id="desc" placeholder="Description"></textarea>
+<button onclick="submitProperty()">Submit Property</button>
+</div>
 </section>
 
-<footer>
-  <p>📧 rera.promizedland@gmail.com | 📞 +91 90805 81547</p>
-</footer>
+<!-- ADMIN -->
+<section class="wrap card">
+<h3>Admin Panel</h3>
+<input id="adminPass" type="password" placeholder="Admin Password">
+<button onclick="loadAdmin()">Login</button>
+<div id="adminPanel"></div>
+</section>
 
 <script>
-/* ================= CONFIG ================= */
 const API = "https://promisedland-realestate.onrender.com";
+const ADMIN_PASS = "admin123";
 
-/* ================= DISTRICTS ================= */
-const districts = [
-"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore","Dharmapuri",
-"Dindigul","Erode","Kallakurichi","Kancheepuram","Karur","Krishnagiri",
-"Madurai","Mayiladuthurai","Nagapattinam","Namakkal","Nilgiris","Perambalur",
-"Pudukkottai","Ramanathapuram","Ranipet","Salem","Sivaganga","Tenkasi",
-"Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli","Tirupattur",
-"Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur","Vellore","Viluppuram",
-"Virudhunagar"
-];
+/* LOAD APPROVED PROPERTIES */
+async function loadProperties(){
+ const res = await fetch(`${API}/properties?approved=true`);
+ const data = await res.json();
 
-function loadDistricts() {
-  document.getElementById("sDistrict").innerHTML =
-    `<option value="">District</option>` +
-    districts.map(d=>`<option>${d}</option>`).join("");
-
-  document.getElementById("pDistrict").innerHTML =
-    districts.map(d=>`<option>${d}</option>`).join("");
-}
-loadDistricts();
-
-/* ================= SEARCH ================= */
-async function searchProperty(){
-  const res = await fetch(`${API}/properties`);
-  const data = await res.json();
-
-  const mode = sMode.value;
-  const cat = sCategory.value;
-  const dist = sDistrict.value;
-  const vill = sVillage.value.toLowerCase();
-
-  const filtered = data.filter(p =>
-    (!mode || p.type===mode) &&
-    (!cat || p.category===cat) &&
-    (!dist || p.district===dist) &&
-    (!vill || p.village.toLowerCase().includes(vill))
-  );
-
-  searchResults.innerHTML = filtered.map(p=>`
-    <div class="card">
-      <b>${p.title}</b><br>
-      ₹ ${p.price}<br>
-      ${p.village}, ${p.district}<br>
-      📞 ${p.mobile}<br><br>
-      <button class="btn"
-        onclick="window.open('https://wa.me/91${p.mobile}?text=Interested in ${p.title}')">
-        WhatsApp Enquiry
-      </button>
-    </div>
-  `).join("") || "No results";
+ results.innerHTML = data.map(p=>`
+  <div class="property">
+   <b>${p.category}</b> (${p.type})<br>
+   Area: ${p.area}<br>
+   ₹ ${p.price}<br>
+   ${p.village}, ${p.district}<br>
+   <a target="_blank"
+    href="https://wa.me/91${p.mobile}?text=Interested in your property">
+    📲 WhatsApp
+   </a>
+  </div>
+ `).join("");
 }
 
-/* ================= POST ================= */
-async function postProperty(){
-  if(!pMobile.value || !pTitle.value || !pPrice.value){
-    alert("Missing required fields");
-    return;
-  }
+/* SUBMIT PROPERTY */
+async function submitProperty(){
+ const body={
+  name:name.value,
+  mobile:mobile.value,
+  type:ptype.value,
+  category:category.value,
+  district:district.value,
+  village:village.value,
+  area:area.value,
+  price:price.value,
+  description:desc.value
+ };
 
-  const payload = {
-    name: pName.value,
-    mobile: pMobile.value,
-    title: pTitle.value,
-    price: pPrice.value,
-    type: pMode.value,
-    category: pCategory.value,
-    district: pDistrict.value,
-    village: pVillage.value,
-    description: pDesc.value
-  };
+ const res = await fetch(`${API}/properties`,{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify(body)
+ });
 
-  const res = await fetch(`${API}/properties`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify(payload)
-  });
+ alert("Property submitted. Await admin approval.");
 
-  const data = await res.json();
-
-  if(data.success){
-    alert("Property submitted. Await admin approval.");
-    window.open(
-      `https://wa.me/919080581547?text=New property submitted: ${pTitle.value}`,
-      "_blank"
-    );
-  }else{
-    alert("Error submitting property");
-  }
+ window.open(
+  "https://wa.me/919080581547?text=New property submitted",
+  "_blank"
+ );
 }
+
+/* ADMIN */
+async function loadAdmin(){
+ if(adminPass.value!==ADMIN_PASS){alert("Wrong password");return;}
+ const res = await fetch(`${API}/properties?approved=false`);
+ const data = await res.json();
+
+ adminPanel.innerHTML = data.map(p=>`
+  <div class="property">
+   ${p.category} - ${p.area}<br>
+   <button onclick="approve('${p.id}')">Approve</button>
+  </div>
+ `).join("");
+}
+
+async function approve(id){
+ await fetch(`${API}/properties/${id}/approve`,{method:"POST"});
+ alert("Approved");
+ loadAdmin();
+}
+
+loadProperties();
 </script>
 
 </body>
