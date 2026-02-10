@@ -129,6 +129,17 @@ app.post("/admin/approve/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+app.get("/properties", async (req, res) => {
+  const approved = req.query.approved;
+
+  let query = db.collection("properties");
+  if (approved !== undefined) {
+    query = query.where("approved", "==", approved === "true");
+  }
+
+  const snap = await query.orderBy("createdAt", "desc").get();
+  res.json(snap.docs.map(d => ({ id: d.id, ...d.data() })));
+});
 
 /* ======================
    SERVER START
