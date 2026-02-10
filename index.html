@@ -152,27 +152,68 @@ async function submitProperty(){
  );
 }
 
-/* ADMIN */
-async function loadAdmin(){
- if(adminPass.value!==ADMIN_PASS){alert("Wrong password");return;}
- const res = await fetch(`${API}/properties?approved=false`);
- const data = await res.json();
+<section id="admin" class="wrap card">
+  <h3>🔐 Admin Panel</h3>
+  <input id="adminPass" type="password" placeholder="Enter Admin Password" />
+  <button class="btn" onclick="adminLogin()">Login</button>
+  <div id="adminPanel" class="hide"></div>
+</section>
 
- adminPanel.innerHTML = data.map(p=>`
-  <div class="property">
-   ${p.category} - ${p.area}<br>
-   <button onclick="approve('${p.id}')">Approve</button>
-  </div>
- `).join("");
+<script>
+const ADMIN_PASSWORD = "Vs5002190?"; // 🔑 CHANGE HERE IF NEEDED
+
+async function adminLogin() {
+  const pass = document.getElementById("adminPass").value.trim();
+
+  if (!pass) {
+    alert("Enter password");
+    return;
+  }
+
+  if (pass !== ADMIN_PASSWORD) {
+    alert("❌ Wrong password");
+    return;
+  }
+
+  alert("✅ Admin logged in");
+
+  document.getElementById("adminPanel").classList.remove("hide");
+
+  loadPendingProperties();
 }
 
-async function approve(id){
- await fetch(`${API}/properties/${id}/approve`,{method:"POST"});
- alert("Approved");
- loadAdmin();
+async function loadPendingProperties() {
+  const res = await fetch(`${API}/properties?approved=false`);
+  const data = await res.json();
+
+  const panel = document.getElementById("adminPanel");
+  panel.innerHTML = "<h4>Pending Properties</h4>";
+
+  if (!data.length) {
+    panel.innerHTML += "<p>No pending approvals</p>";
+    return;
+  }
+
+  data.forEach(p => {
+    panel.innerHTML += `
+      <div class="card">
+        <b>${p.area} ${p.areaUnit}</b><br/>
+        ${p.district}, ${p.village}<br/>
+        ₹${p.price}<br/>
+        📞 ${p.mobile}<br/><br/>
+        <button class="btn" onclick="approveProperty('${p.id}')">Approve</button>
+      </div>
+    `;
+  });
 }
 
-loadProperties();
+async function approveProperty(id) {
+  await fetch(`${API}/properties/${id}/approve`, { method: "POST" });
+  alert("✅ Approved");
+  loadPendingProperties();
+}
+</script>
+
 </script>
 
 </body>
