@@ -2,72 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PromisedLand Real Estate</title>
+<title>PromisedLand RealEstate</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: #f5f5f5;
-}
-
+body { font-family: Arial; margin:0; background:#f4f4f4; }
 header {
-  background: #0c3c2f;
-  color: white;
-  padding: 20px;
-  text-align: center;
+  display:flex; align-items:center;
+  padding:10px 20px; background:#fff;
 }
+header img { height:70px; margin-right:15px; }
+.brand h1 { margin:0; font-size:30px; }
+.brand span { font-size:16px; }
+.brand p { margin:0; font-size:12px; color:#777; }
 
-header img {
-  width: 120px;
-}
-
-header h1 {
-  font-size: 36px;
-  margin: 5px 0;
-}
-
-header p {
-  font-size: 16px;
-  margin: 0;
-}
-
-.container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 20px;
-  background: white;
-}
-
-h2 {
-  border-bottom: 2px solid #0c3c2f;
-  padding-bottom: 5px;
-}
-
-/* FORM */
+section { background:#fff; margin:20px; padding:20px; border-radius:6px; }
 input, select, textarea, button {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
+  width:100%; padding:10px; margin-top:10px;
 }
+button { background:#2c7; border:none; color:#fff; font-size:16px; cursor:pointer; }
 
-button {
-  background: #0c3c2f;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background: #145a45;
-}
-
-.property {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-}
+.lang { position:absolute; right:20px; top:20px; }
 </style>
 </head>
 
@@ -75,166 +30,85 @@ button:hover {
 
 <header>
   <img src="logo.png">
-  <h1>PROMISEDLAND</h1>
-  <p>Real Estate Services | நம்பிக்கையின் நிலம்</p>
+  <div class="brand">
+    <h1>PROMISEDLAND <span>REALESTATE</span></h1>
+    <p>WHERE YOUR VISION MEETS ITS ADDRESS</p>
+  </div>
+
+  <div class="lang">
+    <button onclick="setLang('en')">EN</button>
+    <button onclick="setLang('ta')">TA</button>
+  </div>
 </header>
 
-<div class="container">
+<!-- SEARCH -->
+<section>
+<h2 id="searchTitle">Search Property</h2>
 
-<h2>🔍 Search Property</h2>
-<select id="searchType">
-  <option value="">Buy / Sell / Rent</option>
-  <option value="buy">Buy</option>
-  <option value="sell">Sell</option>
-  <option value="rent">Rent</option>
-</select>
-
-<select id="searchCategory">
-  <option value="">Property Type</option>
-  <option value="plot">Plot</option>
-  <option value="house">House</option>
-  <option value="land">Land</option>
-</select>
-
-<select id="searchDistrict"></select>
-<input placeholder="Village / Location" id="searchVillage">
-<button onclick="loadProperties()">Search</button>
-
-<div id="list"></div>
-
-<hr>
-
-<h2>📝 Post Property</h2>
-<input placeholder="Person / Company Name" id="name">
-<input placeholder="Mobile Number" id="mobile">
 <select id="type">
-  <option value="sell">Sell</option>
-  <option value="buy">Buy</option>
-  <option value="rent">Rent</option>
+  <option>Buy</option><option>Sell</option><option>Rent</option>
 </select>
 
 <select id="category">
-  <option value="plot">Plot</option>
-  <option value="house">House</option>
+  <option>Plot</option><option>Land</option><option>Agriculture</option>
+  <option>Apartment</option><option>House</option><option>Industry</option><option>Shop</option>
 </select>
 
-<select id="district"></select>
-<input placeholder="Village / Location" id="village">
-<input placeholder="Area (Sqft / Cent / Acre)" id="area">
-<input placeholder="Price" id="price">
-<textarea placeholder="Description" id="desc"></textarea>
-<button onclick="submitProperty()">Submit Property</button>
+<input placeholder="District">
+<input placeholder="Village / Location">
+<button>Search</button>
+</section>
 
-<hr>
+<!-- POST PROPERTY -->
+<section>
+<h2 id="postTitle">Post Property</h2>
 
-<h2>🔐 Admin Panel</h2>
-<input type="password" placeholder="Admin Password" id="adminPass">
+<input placeholder="Person / Company Name">
+<input placeholder="Mobile Number">
+<select><option>Buy</option><option>Sell</option><option>Rent</option></select>
+
+<select>
+<option>Plot</option><option>Land</option><option>Agriculture</option>
+<option>Apartment</option><option>House</option><option>Industry</option><option>Shop</option>
+</select>
+
+<input placeholder="District">
+<input placeholder="Village">
+<input placeholder="Area (Sqft / Cent / Acre)">
+<input placeholder="Price">
+<input type="file">
+<textarea placeholder="Description"></textarea>
+<button>Submit Property</button>
+</section>
+
+<!-- ADMIN -->
+<section>
+<h2>Admin Panel</h2>
+<input type="password" id="adminPass" placeholder="Admin Password">
 <button onclick="adminLogin()">Login</button>
-
-<div id="admin"></div>
-
-</div>
+<p id="adminMsg"></p>
+</section>
 
 <script>
-const API = "https://promisedland-realestate.onrender.com";
-let adminToken = "";
-
-/* DISTRICTS */
-const districts = [
-"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore","Dharmapuri",
-"Dindigul","Erode","Kallakurichi","Kanchipuram","Kanyakumari","Karur",
-"Krishnagiri","Madurai","Mayiladuthurai","Nagapattinam","Namakkal",
-"Nilgiris","Perambalur","Pudukkottai","Ramanathapuram","Ranipet",
-"Salem","Sivagangai","Tenkasi","Thanjavur","Theni","Thoothukudi",
-"Tiruchirappalli","Tirunelveli","Tirupattur","Tiruppur","Tiruvallur",
-"Tiruvannamalai","Tiruvarur","Vellore","Viluppuram","Virudhunagar"
-];
-
-function fillDistricts() {
-  const selects = ["district","searchDistrict"];
-  selects.forEach(id=>{
-    const s=document.getElementById(id);
-    s.innerHTML='<option value="">District</option>';
-    districts.forEach(d=>{
-      s.innerHTML+=`<option>${d}</option>`;
-    });
-  });
-}
-fillDistricts();
-
-/* LOAD PROPERTIES */
-async function loadProperties(){
-  const res = await fetch(`${API}/properties?approved=true`);
-  const data = await res.json();
-  document.getElementById("list").innerHTML =
-    data.map(p=>`
-      <div class="property">
-        <b>${p.title}</b><br>
-        ${p.district}, ${p.village}<br>
-        ₹ ${p.price}
-      </div>
-    `).join("");
-}
-loadProperties();
-
-/* SUBMIT */
-async function submitProperty(){
-  await fetch(`${API}/properties`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({
-      name:name.value,
-      mobile:mobile.value,
-      title:category.value,
-      type:type.value,
-      category:category.value,
-      district:district.value,
-      village:village.value,
-      price:price.value,
-      description:desc.value
-    })
-  });
-  alert("Property submitted. Await admin approval.");
+function adminLogin(){
+ fetch("/admin/login",{
+  method:"POST",
+  headers:{"Content-Type":"application/json"},
+  body:JSON.stringify({password:adminPass.value})
+ }).then(r=>r.json()).then(d=>{
+  adminMsg.innerText = d.success ? "Login Success" : "Wrong password";
+ });
 }
 
-/* ADMIN LOGIN */
-async function adminLogin(){
-  const res = await fetch(`${API}/admin/login`,{
-    method:"POST",
-    headers:{ "Content-Type":"application/json" },
-    body:JSON.stringify({ password: adminPass.value })
-  });
-
-  const data = await res.json();
-  if(data.token){
-    adminToken = data.token;
-    loadPending();
-  } else {
-    alert("Wrong password");
-  }
-}
-
-/* LOAD PENDING */
-async function loadPending(){
-  const res = await fetch(`${API}/admin/pending`);
-  const data = await res.json();
-
-  document.getElementById("admin").innerHTML =
-    data.map(p=>`
-      <div class="property">
-        ${p.title} - ${p.district}
-        <button onclick="approve('${p.id}')">Approve</button>
-      </div>
-    `).join("");
-}
-
-/* APPROVE */
-async function approve(id){
-  await fetch(`${API}/admin/approve/${id}`,{
-    method:"POST",
-    headers:{ "Authorization":`Bearer ${adminToken}` }
-  });
-  loadPending();
+function setLang(l){
+ if(l==="ta"){
+  searchTitle.innerText="சொத்து தேடல்";
+  postTitle.innerText="சொத்து பதிவு";
+ }
+ else{
+  searchTitle.innerText="Search Property";
+  postTitle.innerText="Post Property";
+ }
 }
 </script>
 
