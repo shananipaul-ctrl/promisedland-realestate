@@ -1,219 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Promised Land Real Estate</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<title>PromisedLand Real Estate</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body{margin:0;font-family:Poppins;background:#0b1020;color:#fff}
-header{background:#0b1020;position:sticky;top:0}
-.wrap{max-width:1200px;margin:auto;padding:16px}
-.card{background:#11183a;border-radius:14px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none}
-button{background:#f5c16c;border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer}
-.hide{display:none}
-.property{border-bottom:1px solid #333;padding:10px 0}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+}
+
+header {
+  background: #0c3c2f;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+header img {
+  width: 120px;
+}
+
+header h1 {
+  font-size: 36px;
+  margin: 5px 0;
+}
+
+header p {
+  font-size: 16px;
+  margin: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+}
+
+h2 {
+  border-bottom: 2px solid #0c3c2f;
+  padding-bottom: 5px;
+}
+
+/* FORM */
+input, select, textarea, button {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+}
+
+button {
+  background: #0c3c2f;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #145a45;
+}
+
+.property {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="wrap" style="display:flex;align-items:center;gap:16px">
-<img src="logo.png" height="60">
-<h2>Promised Land Real Estate</h2>
-</div>
+  <img src="logo.png">
+  <h1>PROMISEDLAND</h1>
+  <p>Real Estate Services | நம்பிக்கையின் நிலம்</p>
 </header>
 
-<!-- SEARCH -->
-<section class="wrap card">
-<h3>Search Property</h3>
-<div class="grid">
-<select id="filterType">
-<option value="">Buy / Sell / Rent</option>
-<option value="buy">Buy</option>
-<option value="sell">Sell</option>
-<option value="rent">Rent</option>
+<div class="container">
+
+<h2>🔍 Search Property</h2>
+<select id="searchType">
+  <option value="">Buy / Sell / Rent</option>
+  <option value="buy">Buy</option>
+  <option value="sell">Sell</option>
+  <option value="rent">Rent</option>
 </select>
 
-<select id="filterCategory">
-<option value="">Property Type</option>
-<option>Plot</option>
-<option>Agriculture</option>
-<option>House</option>
-<option>Apartment</option>
-<option>Industry</option>
-<option>Shop</option>
+<select id="searchCategory">
+  <option value="">Property Type</option>
+  <option value="plot">Plot</option>
+  <option value="house">House</option>
+  <option value="land">Land</option>
 </select>
 
-<input id="filterDistrict" placeholder="District">
+<select id="searchDistrict"></select>
+<input placeholder="Village / Location" id="searchVillage">
 <button onclick="loadProperties()">Search</button>
-</div>
 
-<div id="results"></div>
-</section>
+<div id="list"></div>
 
-<!-- POST PROPERTY -->
-<section class="wrap card">
-<h3>Post Property</h3>
+<hr>
 
-<div class="grid">
-<input id="name" placeholder="Person / Company Name">
-<input id="mobile" placeholder="Mobile Number">
-
-<select id="ptype">
-<option value="sell">Sell</option>
-<option value="buy">Buy</option>
-<option value="rent">Rent</option>
+<h2>📝 Post Property</h2>
+<input placeholder="Person / Company Name" id="name">
+<input placeholder="Mobile Number" id="mobile">
+<select id="type">
+  <option value="sell">Sell</option>
+  <option value="buy">Buy</option>
+  <option value="rent">Rent</option>
 </select>
 
 <select id="category">
-<option>Plot</option>
-<option>Agriculture</option>
-<option>House</option>
-<option>Apartment</option>
-<option>Industry</option>
-<option>Shop</option>
+  <option value="plot">Plot</option>
+  <option value="house">House</option>
 </select>
 
-<input id="district" placeholder="District">
-<input id="village" placeholder="Village">
-
-<input id="area" placeholder="Area (Sqft / Cent / Acre)">
-<input id="price" placeholder="Price">
-
-<input type="file" id="image">
-
-<textarea id="desc" placeholder="Description"></textarea>
+<select id="district"></select>
+<input placeholder="Village / Location" id="village">
+<input placeholder="Area (Sqft / Cent / Acre)" id="area">
+<input placeholder="Price" id="price">
+<textarea placeholder="Description" id="desc"></textarea>
 <button onclick="submitProperty()">Submit Property</button>
-</div>
-</section>
 
-<!-- ADMIN -->
-<section class="wrap card">
-<h3>Admin Panel</h3>
-<input id="adminPass" type="password" placeholder="Admin Password">
-<button onclick="loadAdmin()">Login</button>
-<div id="adminPanel"></div>
-</section>
+<hr>
+
+<h2>🔐 Admin Panel</h2>
+<input type="password" placeholder="Admin Password" id="adminPass">
+<button onclick="adminLogin()">Login</button>
+
+<div id="admin"></div>
+
+</div>
 
 <script>
 const API = "https://promisedland-realestate.onrender.com";
-const ADMIN_PASS = "Vs5002190?";
+let adminToken = "";
 
-/* LOAD APPROVED PROPERTIES */
-async function loadProperties(){
- const res = await fetch(`${API}/properties?approved=true`);
- const data = await res.json();
+/* DISTRICTS */
+const districts = [
+"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore","Dharmapuri",
+"Dindigul","Erode","Kallakurichi","Kanchipuram","Kanyakumari","Karur",
+"Krishnagiri","Madurai","Mayiladuthurai","Nagapattinam","Namakkal",
+"Nilgiris","Perambalur","Pudukkottai","Ramanathapuram","Ranipet",
+"Salem","Sivagangai","Tenkasi","Thanjavur","Theni","Thoothukudi",
+"Tiruchirappalli","Tirunelveli","Tirupattur","Tiruppur","Tiruvallur",
+"Tiruvannamalai","Tiruvarur","Vellore","Viluppuram","Virudhunagar"
+];
 
- results.innerHTML = data.map(p=>`
-  <div class="property">
-   <b>${p.category}</b> (${p.type})<br>
-   Area: ${p.area}<br>
-   ₹ ${p.price}<br>
-   ${p.village}, ${p.district}<br>
-   <a target="_blank"
-    href="https://wa.me/91${p.mobile}?text=Interested in your property">
-    📲 WhatsApp
-   </a>
-  </div>
- `).join("");
-}
-
-/* SUBMIT PROPERTY */
-async function submitProperty(){
- const body={
-  name:name.value,
-  mobile:mobile.value,
-  type:ptype.value,
-  category:category.value,
-  district:district.value,
-  village:village.value,
-  area:area.value,
-  price:price.value,
-  description:desc.value
- };
-
- const res = await fetch(`${API}/properties`,{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify(body)
- });
-
- alert("Property submitted. Await admin approval.");
-
- window.open(
-  "https://wa.me/919080581547?text=New property submitted",
-  "_blank"
- );
-}
-
-<section id="admin" class="wrap card">
-  <h3>🔐 Admin Panel</h3>
-  <input id="adminPass" type="password" placeholder="Enter Admin Password" />
-  <button class="btn" onclick="adminLogin()">Login</button>
-  <div id="adminPanel" class="hide"></div>
-</section>
-
-<script>
-const ADMIN_PASSWORD = "Vs5002190?"; // 🔑 CHANGE HERE IF NEEDED
-
-async function adminLogin() {
-  const pass = document.getElementById("adminPass").value.trim();
-
-  if (!pass) {
-    alert("Enter password");
-    return;
-  }
-
-  if (pass !== ADMIN_PASSWORD) {
-    alert("❌ Wrong password");
-    return;
-  }
-
-  alert("✅ Admin logged in");
-
-  document.getElementById("adminPanel").classList.remove("hide");
-
-  loadPendingProperties();
-}
-
-async function loadPendingProperties() {
-  const res = await fetch(`${API}/properties?approved=false`);
-  const data = await res.json();
-
-  const panel = document.getElementById("adminPanel");
-  panel.innerHTML = "<h4>Pending Properties</h4>";
-
-  if (!data.length) {
-    panel.innerHTML += "<p>No pending approvals</p>";
-    return;
-  }
-
-  data.forEach(p => {
-    panel.innerHTML += `
-      <div class="card">
-        <b>${p.area} ${p.areaUnit}</b><br/>
-        ${p.district}, ${p.village}<br/>
-        ₹${p.price}<br/>
-        📞 ${p.mobile}<br/><br/>
-        <button class="btn" onclick="approveProperty('${p.id}')">Approve</button>
-      </div>
-    `;
+function fillDistricts() {
+  const selects = ["district","searchDistrict"];
+  selects.forEach(id=>{
+    const s=document.getElementById(id);
+    s.innerHTML='<option value="">District</option>';
+    districts.forEach(d=>{
+      s.innerHTML+=`<option>${d}</option>`;
+    });
   });
 }
+fillDistricts();
 
-async function approveProperty(id) {
-  await fetch(`${API}/properties/${id}/approve`, { method: "POST" });
-  alert("✅ Approved");
-  loadPendingProperties();
+/* LOAD PROPERTIES */
+async function loadProperties(){
+  const res = await fetch(`${API}/properties?approved=true`);
+  const data = await res.json();
+  document.getElementById("list").innerHTML =
+    data.map(p=>`
+      <div class="property">
+        <b>${p.title}</b><br>
+        ${p.district}, ${p.village}<br>
+        ₹ ${p.price}
+      </div>
+    `).join("");
 }
-</script>
+loadProperties();
 
+/* SUBMIT */
+async function submitProperty(){
+  await fetch(`${API}/properties`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      name:name.value,
+      mobile:mobile.value,
+      title:category.value,
+      type:type.value,
+      category:category.value,
+      district:district.value,
+      village:village.value,
+      price:price.value,
+      description:desc.value
+    })
+  });
+  alert("Property submitted. Await admin approval.");
+}
+
+/* ADMIN LOGIN */
+async function adminLogin(){
+  const res = await fetch(`${API}/admin/login`,{
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ password: adminPass.value })
+  });
+
+  const data = await res.json();
+  if(data.token){
+    adminToken = data.token;
+    loadPending();
+  } else {
+    alert("Wrong password");
+  }
+}
+
+/* LOAD PENDING */
+async function loadPending(){
+  const res = await fetch(`${API}/admin/pending`);
+  const data = await res.json();
+
+  document.getElementById("admin").innerHTML =
+    data.map(p=>`
+      <div class="property">
+        ${p.title} - ${p.district}
+        <button onclick="approve('${p.id}')">Approve</button>
+      </div>
+    `).join("");
+}
+
+/* APPROVE */
+async function approve(id){
+  await fetch(`${API}/admin/approve/${id}`,{
+    method:"POST",
+    headers:{ "Authorization":`Bearer ${adminToken}` }
+  });
+  loadPending();
+}
 </script>
 
 </body>
