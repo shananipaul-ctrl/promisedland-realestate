@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>PromisedLand Real Estate | Tamil Nadu</title>
+<title>PROMISEDLAND REAL ESTATE | Tamil Nadu</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -13,227 +13,198 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:Poppins;background:var(--bg);color:var(--txt)}
+header{position:sticky;top:0;background:#0b1020;z-index:9}
 .wrap{max-width:1200px;margin:auto;padding:16px}
-.card{background:var(--card);border-radius:14px;padding:16px;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-input,select,textarea,button{width:100%;padding:10px;border-radius:8px;border:none}
-button{background:var(--pri);font-weight:600;cursor:pointer}
-.property{border:1px solid #2a3470;padding:12px;border-radius:10px}
-small{opacity:.8}
-.hide{display:none}
+.logo h1{font-family:Cinzel;color:var(--pri);line-height:1}
+nav a{color:#fff;margin:0 10px;text-decoration:none}
+.card{background:var(--card);border-radius:16px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+input,select,textarea{width:100%;padding:10px;border-radius:8px;border:none}
+.btn{background:var(--pri);border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer}
+.btn.alt{background:#222;color:#fff}
+footer{text-align:center;opacity:.8;margin:30px 0}
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
-<h1>🏡 PromisedLand Real Estate</h1>
-<p>Buy • Sell • Rent across Tamil Nadu</p>
-</div>
+<header>
+  <div class="wrap" style="display:flex;justify-content:space-between;align-items:center">
+    <div class="logo">
+      <h1>PROMISED LAND<br>REAL ESTATE</h1>
+    </div>
+    <nav>
+      <a href="#search">Search</a>
+      <a href="#post">Post</a>
+    </nav>
+  </div>
+</header>
 
-<!-- 🔍 SEARCH -->
-<div class="wrap card">
-<h3>🔍 Search Properties</h3>
-<div class="grid">
-<select id="sMode">
-  <option value="">Buy / Rent / Sell</option>
-  <option>Buy</option>
-  <option>Rent</option>
-  <option>Sell</option>
-</select>
+<section class="wrap card">
+  <h2>Where Trust Meets Land</h2>
+  <p>Buy • Sell • Rent properties across Tamil Nadu</p>
+</section>
 
-<select id="sCategory">
-  <option value="">Property Type</option>
-  <option>Plot</option>
-  <option>Agriculture</option>
-  <option>House</option>
-  <option>Apartment</option>
-  <option>Industry</option>
-  <option>Shop</option>
-</select>
+<!-- SEARCH -->
+<section id="search" class="wrap card">
+  <h3>🔍 Property Search</h3>
+  <div class="grid">
+    <select id="sMode">
+      <option value="">Buy / Rent / Sell</option>
+      <option>Buy</option>
+      <option>Sell</option>
+      <option>Rent</option>
+    </select>
 
-<select id="sDistrict"></select>
-<select id="sVillage"></select>
+    <select id="sCategory">
+      <option value="">Property Type</option>
+      <option>Plot</option>
+      <option>Agriculture</option>
+      <option>House</option>
+      <option>Apartment</option>
+      <option>Industry</option>
+      <option>Shop</option>
+    </select>
 
-<button onclick="loadProperties()">Search</button>
-</div>
+    <select id="sDistrict"></select>
 
-<div id="results" class="grid"></div>
-</div>
+    <input id="sVillage" placeholder="Village (optional)" />
 
-<!-- 📝 POST PROPERTY -->
-<div class="wrap card">
-<h3>📝 Post Property</h3>
-<div class="grid">
-<input id="oName" placeholder="Owner / Company Name" />
-<input id="pMobile" placeholder="Mobile Number" />
+    <button class="btn" onclick="searchProperty()">Search</button>
+  </div>
 
-<select id="pMode">
-  <option>Buy</option>
-  <option>Rent</option>
-  <option>Sell</option>
-</select>
+  <div id="searchResults"></div>
+</section>
 
-<select id="pCategory">
-  <option>Plot</option>
-  <option>Agriculture</option>
-  <option>House</option>
-  <option>Apartment</option>
-  <option>Industry</option>
-  <option>Shop</option>
-</select>
+<!-- POST -->
+<section id="post" class="wrap card">
+  <h3>📤 Post Property</h3>
+  <div class="grid">
+    <input id="pName" placeholder="Name (Person / Company)" />
+    <input id="pMobile" placeholder="Mobile Number" />
+    <input id="pTitle" placeholder="Property Title" />
+    <input id="pPrice" placeholder="Price" />
 
-<select id="pDistrict"></select>
-<select id="pVillage"></select>
+    <select id="pMode">
+      <option>Buy</option>
+      <option>Sell</option>
+      <option>Rent</option>
+    </select>
 
-<input id="pPrice" type="number" placeholder="Price" />
-<textarea id="pDesc" placeholder="Description"></textarea>
+    <select id="pCategory">
+      <option>Plot</option>
+      <option>Agriculture</option>
+      <option>House</option>
+      <option>Apartment</option>
+      <option>Industry</option>
+      <option>Shop</option>
+    </select>
 
-<button onclick="postProperty()">Submit Property</button>
-</div>
-</div>
+    <select id="pDistrict"></select>
+    <input id="pVillage" placeholder="Village" />
+    <textarea id="pDesc" placeholder="Description"></textarea>
 
-<!-- 🤖 AI PRICE (UI READY) -->
-<div class="wrap card">
-<h3>🤖 AI Land Price Prediction</h3>
-<input id="aiArea" placeholder="Area (sqft / cents)" />
-<select id="aiDistrict"></select>
-<button onclick="predictPrice()">Predict Price</button>
-<p id="aiResult"></p>
-</div>
+    <button class="btn" onclick="postProperty()">Submit Property</button>
+  </div>
+</section>
 
-<!-- 🔐 ADMIN -->
-<div class="wrap card">
-<h3>🔐 Admin Approval</h3>
-<input id="adminPass" type="password" placeholder="Admin password" />
-<button onclick="adminLogin()">Login</button>
-<div id="adminPanel"></div>
-</div>
+<footer>
+  <p>📧 rera.promizedland@gmail.com | 📞 +91 90805 81547</p>
+</footer>
 
 <script>
 /* ================= CONFIG ================= */
 const API = "https://promisedland-realestate.onrender.com";
 
-/* ================= TN DISTRICTS + VILLAGES ================= */
-const districts = {
-"Ariyalur":["Ariyalur","Sendurai"],
-"Chennai":["T Nagar","Velachery","Tambaram"],
-"Coimbatore":["Pollachi","Mettupalayam"],
-"Cuddalore":["Chidambaram","Panruti"],
-"Dharmapuri":["Palacode","Harur"],
-"Dindigul":["Palani","Oddanchatram"],
-"Erode":["Bhavani","Perundurai"],
-"Kallakurichi":["Ulundurpet"],
-"Kanchipuram":["Sriperumbudur"],
-"Kanyakumari":["Nagercoil","Colachel"],
-"Karur":["Kulithalai"],
-"Krishnagiri":["Hosur"],
-"Madurai":["Melur","Thirumangalam"],
-"Mayiladuthurai":["Mayiladuthurai"],
-"Nagapattinam":["Vedaranyam"],
-"Namakkal":["Rasipuram"],
-"Nilgiris":["Ooty","Coonoor"],
-"Perambalur":["Perambalur"],
-"Pudukkottai":["Alangudi"],
-"Ramanathapuram":["Paramakudi"],
-"Ranipet":["Arakkonam"],
-"Salem":["Attur","Mettur"],
-"Sivaganga":["Karaikudi"],
-"Tenkasi":["Sankarankovil"],
-"Thanjavur":["Kumbakonam"],
-"Theni":["Bodinayakanur"],
-"Thoothukudi":["Tuticorin"],
-"Tiruchirappalli":["Srirangam"],
-"Tirunelveli":["Palayamkottai"],
-"Tirupathur":["Vaniyambadi"],
-"Tiruppur":["Avinashi"],
-"Tiruvallur":["Avadi"],
-"Tiruvannamalai":["Cheyyar"],
-"Tiruvarur":["Mannargudi"],
-"Vellore":["Katpadi"],
-"Viluppuram":["Gingee"],
-"Virudhunagar":["Rajapalayam"]
-};
+/* ================= DISTRICTS ================= */
+const districts = [
+"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore","Dharmapuri",
+"Dindigul","Erode","Kallakurichi","Kancheepuram","Karur","Krishnagiri",
+"Madurai","Mayiladuthurai","Nagapattinam","Namakkal","Nilgiris","Perambalur",
+"Pudukkottai","Ramanathapuram","Ranipet","Salem","Sivaganga","Tenkasi",
+"Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli","Tirupattur",
+"Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur","Vellore","Viluppuram",
+"Virudhunagar"
+];
 
-function loadDistricts(sel){
-  sel.innerHTML='<option value="">Select District</option>';
-  Object.keys(districts).forEach(d=>sel.innerHTML+=`<option>${d}</option>`);
+function loadDistricts() {
+  document.getElementById("sDistrict").innerHTML =
+    `<option value="">District</option>` +
+    districts.map(d=>`<option>${d}</option>`).join("");
+
+  document.getElementById("pDistrict").innerHTML =
+    districts.map(d=>`<option>${d}</option>`).join("");
 }
+loadDistricts();
 
-function loadVillages(dSel,vSel){
-  vSel.innerHTML='<option value="">Select Village</option>';
-  (districts[dSel.value]||[]).forEach(v=>vSel.innerHTML+=`<option>${v}</option>`);
-}
-
-/* Init selects */
-[sDistrict,pDistrict,aiDistrict].forEach(loadDistricts);
-sDistrict.onchange=()=>loadVillages(sDistrict,sVillage);
-pDistrict.onchange=()=>loadVillages(pDistrict,pVillage);
-
-/* ================= LOAD PROPERTIES ================= */
-async function loadProperties(){
-  const res = await fetch(API+"/properties");
+/* ================= SEARCH ================= */
+async function searchProperty(){
+  const res = await fetch(`${API}/properties`);
   const data = await res.json();
-  results.innerHTML='';
 
-  data
-  .filter(p=>
-    (!sMode.value||p.type===sMode.value) &&
-    (!sCategory.value||p.category===sCategory.value) &&
-    (!sDistrict.value||p.district===sDistrict.value) &&
-    (!sVillage.value||p.village===sVillage.value)
-  )
-  .forEach(p=>{
-    results.innerHTML+=`
-    <div class="property">
+  const mode = sMode.value;
+  const cat = sCategory.value;
+  const dist = sDistrict.value;
+  const vill = sVillage.value.toLowerCase();
+
+  const filtered = data.filter(p =>
+    (!mode || p.type===mode) &&
+    (!cat || p.category===cat) &&
+    (!dist || p.district===dist) &&
+    (!vill || p.village.toLowerCase().includes(vill))
+  );
+
+  searchResults.innerHTML = filtered.map(p=>`
+    <div class="card">
       <b>${p.title}</b><br>
-      ${p.category} • ${p.type}<br>
+      ₹ ${p.price}<br>
       ${p.village}, ${p.district}<br>
-      ₹${p.price}<br>
       📞 ${p.mobile}<br><br>
-      <a href="https://wa.me/91${p.mobile}?text=Interested in ${p.title}" target="_blank">
-        <button>WhatsApp Enquiry</button>
-      </a>
-    </div>`;
-  });
+      <button class="btn"
+        onclick="window.open('https://wa.me/91${p.mobile}?text=Interested in ${p.title}')">
+        WhatsApp Enquiry
+      </button>
+    </div>
+  `).join("") || "No results";
 }
 
-/* ================= POST PROPERTY ================= */
+/* ================= POST ================= */
 async function postProperty(){
-  const body={
-    title:oName.value,
-    mobile:pMobile.value,
-    type:pMode.value,
-    category:pCategory.value,
-    district:pDistrict.value,
-    village:pVillage.value,
-    price:pPrice.value,
-    description:pDesc.value
+  if(!pMobile.value || !pTitle.value || !pPrice.value){
+    alert("Missing required fields");
+    return;
+  }
+
+  const payload = {
+    name: pName.value,
+    mobile: pMobile.value,
+    title: pTitle.value,
+    price: pPrice.value,
+    type: pMode.value,
+    category: pCategory.value,
+    district: pDistrict.value,
+    village: pVillage.value,
+    description: pDesc.value
   };
 
-  await fetch(API+"/properties",{
+  const res = await fetch(`${API}/properties`,{
     method:"POST",
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(body)
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify(payload)
   });
 
-  alert("Property submitted. Await admin approval.");
-}
+  const data = await res.json();
 
-/* ================= AI PRICE (PLACEHOLDER) ================= */
-function predictPrice(){
-  aiResult.innerText="Estimated price: ₹"+(aiArea.value*3500||"—")+" (AI demo)";
-}
-
-/* ================= ADMIN ================= */
-function adminLogin(){
-  if(adminPass.value==="admin123"){
-    adminPanel.innerHTML="<p>Admin logged in. Approval UI coming.</p>";
+  if(data.success){
+    alert("Property submitted. Await admin approval.");
+    window.open(
+      `https://wa.me/919080581547?text=New property submitted: ${pTitle.value}`,
+      "_blank"
+    );
+  }else{
+    alert("Error submitting property");
   }
 }
-
-/* Initial load */
-loadProperties();
 </script>
 
 </body>
