@@ -137,3 +137,8 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+app.post("/properties/:id/approve", async (req,res)=>{
+ await db.collection("properties").doc(req.params.id)
+ .update({approved:true});
+ res.send("ok");
+});
