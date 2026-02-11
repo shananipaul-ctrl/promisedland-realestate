@@ -184,3 +184,88 @@ padding:15px;
 border-radius:12px;
 margin-bottom:15px;
 }
+/* ===== IPO HERO SECTION ===== */
+.hero{
+height:420px;
+background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+url('https://images.unsplash.com/photo-1560518883-ce09059eeffa');
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+color:white;
+border-radius:20px;
+margin-bottom:40px;
+}
+
+.hero h1{
+font-size:48px;
+font-weight:900;
+letter-spacing:3px;
+color:#FFD700;
+}
+
+.hero p{
+font-size:18px;
+margin-top:10px;
+opacity:0.9;
+}
+
+/* ===== MARKET STATS BAR ===== */
+.stats{
+display:flex;
+justify-content:space-around;
+background:linear-gradient(90deg,#0b2c5f,#1f4ea0);
+color:white;
+padding:25px;
+border-radius:15px;
+margin-bottom:40px;
+text-align:center;
+}
+
+.stats div{
+font-size:18px;
+}
+
+.stats strong{
+display:block;
+font-size:28px;
+color:#FFD700;
+}
+
+/* ===== FLOATING BUTTONS ===== */
+.float-btn{
+position:fixed;
+right:25px;
+bottom:25px;
+background:#25D366;
+color:white;
+padding:14px 18px;
+border-radius:50px;
+box-shadow:0 8px 25px rgba(0,0,0,0.3);
+cursor:pointer;
+z-index:999;
+}
+
+.float-btn.call{
+bottom:85px;
+background:#0b2c5f;
+}
+
+/* ===== TRUST BADGES ===== */
+.trust{
+display:flex;
+justify-content:space-around;
+margin:40px 0;
+text-align:center;
+}
+
+.trust div{
+padding:20px;
+background:white;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.1);
+width:30%;
+}
