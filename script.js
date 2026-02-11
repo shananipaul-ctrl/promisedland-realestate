@@ -229,3 +229,11 @@ async function approveProperty(id) {
 window.onload = function () {
   loadDistricts();
 };
+function switchLang(){
+if(langSwitch.value==="ta"){
+document.querySelector(".tagline").innerText="உங்கள் கனவு நிலத்தின் முகவரி";
+}
+else{
+document.querySelector(".tagline").innerText="Where Your Vision Meets Its Address";
+}
+}
