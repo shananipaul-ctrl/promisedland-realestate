@@ -1,79 +1,119 @@
 <!DOCTYPE html>
-<html>
-<head><meta name="description" content="Buy Sell Rent Property in Tamil Nadu - PromisedLand RealEstate">
-<meta name="keywords" content="Tamil Nadu property, land for sale, real estate TN">
-<meta property="og:title" content="PromisedLand RealEstate">
->
+<html lang="en">
+<head>
 <meta charset="UTF-8">
-<title>PROMISEDLAND REALESTATE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PromisedLand Real Estate | Buy Sell Rent Property Tamil Nadu</title>
+
+<meta name="description" content="PromisedLand Real Estate – Buy, Sell & Rent properties across all 38 districts in Tamil Nadu. Plots, Land, Agriculture, Apartment, House, Industry, Shop.">
+<meta name="keywords" content="Real Estate Tamil Nadu, Buy Land TN, Sell Plot, Rent House, Agriculture Land Tamil Nadu">
+<meta name="author" content="PromisedLand Real Estate">
+<meta name="robots" content="index, follow">
+
+<link rel="icon" type="image/png" href="logo.png">
 
 <style>
 body{
-margin:0;
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f6f9;
 }
+
 header{
-display:flex;
-align-items:center;
-padding:20px;
-background:rgba(0,0,0,0.6);
+    background:#0b2c5f;
+    color:white;
+    padding:15px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
-header img{
-height:90px;
-margin-right:20px;
+
+.logo{
+    display:flex;
+    align-items:center;
 }
-.brand h1{
-margin:0;
-font-size:36px;
-letter-spacing:2px;
+
+.logo img{
+    height:60px;
+    margin-right:15px;
 }
+
+.brand{
+    font-size:28px;
+    font-weight:bold;
+}
+
 .brand span{
-font-size:18px;
-color:#ccc;
+    font-weight:normal;
 }
-.brand p{
-margin:0;
-font-size:14px;
-color:#f5c16c;
+
+.tagline{
+    font-size:14px;
+    opacity:0.9;
 }
-section{
-margin:30px;
-padding:25px;
-background:rgba(255,255,255,0.1);
-border-radius:12px;
-backdrop-filter:blur(10px);
+
+.container{
+    padding:30px;
+    max-width:1200px;
+    margin:auto;
 }
-input,select,textarea{
-width:100%;
-padding:12px;
-margin-top:12px;
-border-radius:8px;
-border:none;
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
 }
+
+input, select, textarea{
+    width:100%;
+    padding:8px;
+    margin:5px 0 15px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
 button{
-width:100%;
-padding:12px;
-margin-top:15px;
-background:#f5c16c;
-border:none;
-border-radius:8px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
+    padding:8px 15px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    background:#0b2c5f;
+    color:white;
+    font-size:14px;
 }
-.property-card{
-background:#fff;
-color:#000;
-padding:15px;
-border-radius:10px;
-margin-top:15px;
+
+button:hover{
+    background:#163d82;
 }
-.property-card img{
-width:100%;
-border-radius:10px;
+
+.property{
+    border:1px solid #ddd;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.property img{
+    width:100%;
+    max-height:200px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.footer{
+    background:#0b2c5f;
+    color:white;
+    padding:20px;
+    text-align:center;
+    margin-top:40px;
+}
+
+.lang-switch{
+    cursor:pointer;
+    font-size:14px;
 }
 </style>
 </head>
@@ -81,24 +121,31 @@ border-radius:10px;
 <body>
 
 <header>
-<img src="logo.png">
-<div class="brand">
-<h1>PROMISEDLAND <span>REALESTATE</span></h1>
-<p>WHERE YOUR VISION MEETS ITS ADDRESS</p>
+<div class="logo">
+<img src="logo.png" alt="PromisedLand Logo">
+<div>
+<div class="brand">PROMISEDLAND <span>REALESTATE</span></div>
+<div class="tagline">Where Your Vision Meets Its Address</div>
 </div>
+</div>
+
+<div class="lang-switch" onclick="toggleLang()">தமிழ் / English</div>
 </header>
 
-<section>
+<div class="container">
+
+<!-- SEARCH -->
+<div class="card">
 <h2>Search Property</h2>
 
-<select id="searchType">
-<option value="">Buy/Sell/Rent</option>
-<option>Buy</option>
-<option>Sell</option>
-<option>Rent</option>
+<select id="filterType">
+<option value="">Buy / Sell / Rent</option>
+<option value="buy">Buy</option>
+<option value="sell">Sell</option>
+<option value="rent">Rent</option>
 </select>
 
-<select id="searchCategory">
+<select id="filterCategory">
 <option value="">Property Type</option>
 <option>Plot</option>
 <option>Land</option>
@@ -109,32 +156,70 @@ border-radius:10px;
 <option>Shop</option>
 </select>
 
-<select id="searchDistrict">
-<option value="">Select District</option>
+<select id="filterDistrict">
+<option value="">District</option>
+<option>Chennai</option>
+<option>Coimbatore</option>
+<option>Salem</option>
+<option>Madurai</option>
+<option>Trichy</option>
+<option>Tirunelveli</option>
+<option>Vellore</option>
+<option>Erode</option>
+<option>Thanjavur</option>
+<option>Dharmapuri</option>
+<option>Krishnagiri</option>
+<option>Kanchipuram</option>
+<option>Namakkal</option>
+<option>Dindigul</option>
+<option>Karur</option>
+<option>Cuddalore</option>
+<option>Nagapattinam</option>
+<option>Villupuram</option>
+<option>Thoothukudi</option>
+<option>Sivagangai</option>
+<option>Ramanathapuram</option>
+<option>Tiruppur</option>
+<option>Nilgiris</option>
+<option>Perambalur</option>
+<option>Ariyalur</option>
+<option>Tiruvallur</option>
+<option>Virudhunagar</option>
+<option>Kanyakumari</option>
+<option>Pudukottai</option>
+<option>Tiruvarur</option>
+<option>Theni</option>
+<option>Tirupattur</option>
+<option>Ranipet</option>
+<option>Kallakurichi</option>
+<option>Tenkasi</option>
+<option>Mayiladuthurai</option>
+<option>Chengalpattu</option>
 </select>
-
-<input id="searchVillage" placeholder="Village / Location">
 
 <button onclick="loadProperties()">Search</button>
+</div>
 
+<!-- PROPERTY LIST -->
+<div class="card">
+<h2>Available Properties</h2>
 <div id="propertyList"></div>
-</section>
+</div>
 
-<section>
+<!-- POST PROPERTY -->
+<div class="card">
 <h2>Post Property</h2>
 
-<form id="propertyForm" enctype="multipart/form-data">
+<input type="text" id="name" placeholder="Person / Company Name">
+<input type="text" id="mobile" placeholder="Mobile Number">
 
-<input name="name" placeholder="Person / Company Name" required>
-<input name="mobile" placeholder="Mobile Number" required>
-
-<select name="type">
-<option>Buy</option>
-<option>Sell</option>
-<option>Rent</option>
+<select id="type">
+<option value="sell">Sell</option>
+<option value="buy">Buy</option>
+<option value="rent">Rent</option>
 </select>
 
-<select name="category">
+<select id="category">
 <option>Plot</option>
 <option>Land</option>
 <option>Agriculture</option>
@@ -144,153 +229,129 @@ border-radius:10px;
 <option>Shop</option>
 </select>
 
-<select name="district" id="postDistrict"></select>
+<select id="district">
+<option>Chennai</option>
+<option>Coimbatore</option>
+<option>Salem</option>
+<option>Madurai</option>
+<option>Trichy</option>
+</select>
 
-<input name="village" placeholder="Village / Location">
-<input name="area" placeholder="Area (Sqft / Cent / Acre)">
-<input name="price" placeholder="Price" required>
-<input type="file" name="image">
-<textarea name="description" placeholder="Description"></textarea>
+<input type="text" id="village" placeholder="Village / Location">
+<input type="text" id="title" placeholder="Area (Sqft / Cent / Acre)">
+<input type="number" id="price" placeholder="Price">
+<input type="file" id="images" multiple>
+<textarea id="description" placeholder="Description"></textarea>
 
-<button type="submit">Submit Property</button>
+<button onclick="submitProperty()">Submit</button>
+</div>
 
-</form>
-</section>
-
-<section>
+<!-- ADMIN PANEL -->
+<div class="card">
 <h2>Admin Panel</h2>
-<input type="password" id="adminPassword" placeholder="Admin Password">
+<input type="password" id="adminPass" placeholder="Admin Password">
 <button onclick="adminLogin()">Login</button>
-<div id="adminPanel"></div>
-</section>
-<section>
-<h2>Admin Analytics</h2>
-<p>Total Properties: <span id="totalProp"></span></p>
-<p>Featured: <span id="totalFeatured"></span></p>
-<p>Pending: <span id="totalPending"></span></p>
-</section>
+<div id="adminArea"></div>
+</div>
+
+</div>
+
+<div class="footer">
+📞 +91 9876543210 | ✉ promisedlandrealestate@email.com
+</div>
+
 <script>
-
 const API = "https://promisedland-realestate.onrender.com";
-let adminToken = "";
-
-const districts = [
-"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore",
-"Dharmapuri","Dindigul","Erode","Kallakurichi","Kanchipuram",
-"Kanyakumari","Karur","Krishnagiri","Madurai","Mayiladuthurai",
-"Nagapattinam","Namakkal","Nilgiris","Perambalur","Pudukkottai",
-"Ramanathapuram","Ranipet","Salem","Sivaganga","Tenkasi",
-"Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli",
-"Tirupattur","Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur",
-"Vellore","Viluppuram","Virudhunagar"
-];
-
-districts.forEach(d=>{
-document.getElementById("searchDistrict").innerHTML += `<option>${d}</option>`;
-document.getElementById("postDistrict").innerHTML += `<option>${d}</option>`;
-});
 
 async function loadProperties(){
-const res = await fetch(API + "/properties");
-const data = await res.json();
-const list = document.getElementById("propertyList");
-list.innerHTML="";
-data.forEach(p=>{
-list.innerHTML+=`
-<div class="property-card">
-<img src="${p.imageUrl || 'https://via.placeholder.com/400'}">
-<h3>${p.category} - ${p.type}</h3>
-<p>${p.district} - ${p.village}</p>
-<p>Area: ${p.area}</p>
-<p>₹ ${p.price}</p>
-<a href="https://wa.me/91${p.mobile}?text=I am interested in your property">WhatsApp Enquiry</a>
-</div>`;
-});
+    const type = document.getElementById("filterType").value;
+    const category = document.getElementById("filterCategory").value;
+    const district = document.getElementById("filterDistrict").value;
+
+    let url = API + "/properties?approved=true";
+
+    if(type) url += "&type=" + type;
+    if(category) url += "&category=" + category;
+    if(district) url += "&district=" + district;
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    const list = document.getElementById("propertyList");
+    list.innerHTML = "";
+
+    data.forEach(p=>{
+        list.innerHTML += `
+        <div class="property">
+            ${p.imageUrls && p.imageUrls.length ? `<img src="${p.imageUrls[0]}">` : ""}
+            <h3>${p.title}</h3>
+            <p><b>District:</b> ${p.district}</p>
+            <p><b>Price:</b> ₹${p.price}</p>
+            <p>${p.description}</p>
+        </div>`;
+    });
 }
 
-document.getElementById("propertyForm").addEventListener("submit",async e=>{
-e.preventDefault();
-const formData = new FormData(e.target);
+async function submitProperty(){
+    const formData = new FormData();
+    formData.append("name", name.value);
+    formData.append("mobile", mobile.value);
+    formData.append("type", type.value);
+    formData.append("category", category.value);
+    formData.append("district", district.value);
+    formData.append("village", village.value);
+    formData.append("title", title.value);
+    formData.append("price", price.value);
+    formData.append("description", description.value);
 
-const res = await fetch(API+"/properties",{
-method:"POST",
-body:formData
-});
-const data = await res.json();
-alert("Property submitted. Await admin approval.");
-});
+    const files = images.files;
+    for(let i=0;i<files.length;i++){
+        formData.append("images", files[i]);
+    }
+
+    const res = await fetch(API + "/properties",{
+        method:"POST",
+        body:formData
+    });
+
+    const result = await res.json();
+    alert(result.message);
+}
 
 async function adminLogin(){
-const pass = document.getElementById("adminPassword").value;
-const res = await fetch(API+"/admin/login",{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({password:pass})
-});
-const data = await res.json();
-if(data.success){
-adminToken=data.token;
-loadPending();
-}else{
-alert("Wrong password");
-}
-}
+    if(document.getElementById("adminPass").value !== "Vs5002190?"){
+        alert("Wrong password");
+        return;
+    }
 
-async function loadPending(){
-const res = await fetch(API+"/admin/pending",{
-headers:{Authorization:adminToken}
-});
-const data = await res.json();
-const panel=document.getElementById("adminPanel");
-panel.innerHTML="";
-data.forEach(p=>{
-panel.innerHTML+=`
-<div class="property-card">
-<p>${p.name} - ${p.mobile}</p>
-<p>${p.district}</p>
-<button onclick="approve('${p.id}')">Approve</button>
-</div>`;
-});
+    const res = await fetch(API + "/admin/pending");
+    const data = await res.json();
+
+    let html = "<h3>Pending Properties</h3>";
+
+    data.forEach(p=>{
+        html += `
+        <div class="property">
+            <h4>${p.title}</h4>
+            <p>${p.district}</p>
+            <button onclick="approve('${p.id}')">Approve</button>
+        </div>`;
+    });
+
+    document.getElementById("adminArea").innerHTML = html;
 }
 
 async function approve(id){
-await fetch(API+"/admin/approve/"+id,{
-method:"POST",
-headers:{Authorization:adminToken}
-});
-alert("Approved");
-loadPending();
+    await fetch(API + "/admin/approve/" + id,{method:"POST"});
+    alert("Approved");
+    adminLogin();
+}
+
+function toggleLang(){
+    alert("Tamil version coming soon 🌍");
 }
 
 loadProperties();
-<section>
-<h2>AI Land Price Estimator</h2>
-
-<input id="aiArea" placeholder="Area (Sqft)">
-<input id="aiRate" placeholder="Rate per Sqft">
-
-<button onclick="estimatePrice()">Calculate</button>
-
-<p id="aiResult"></p>
-</section>
-<section>
-<h2>EMI Calculator</h2>
-
-<input id="loanAmount" placeholder="Loan Amount">
-<input id="interest" placeholder="Interest %">
-<input id="years" placeholder="Years">
-
-<button onclick="calculateEMI()">Calculate EMI</button>
-
-<p id="emiResult"></p>
-</section>
-<footer style="text-align:center;padding:25px;background:#000;color:#fff;">
-<h3>PROMISEDLAND REALESTATE</h3>
-<p>📧 rera.promizedland@gmail.com</p>
-<p>📞 +91 90805 81547</p>
-<p>© 2026 PromisedLand RealEstate. All rights reserved.</p>
-</footer>
-
 </script>
 
 </body>
