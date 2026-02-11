@@ -1,115 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>PromisedLand RealEstate</title>
+<title>PROMISEDLAND REALESTATE</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body { font-family: Arial; margin:0; background:#f4f4f4; }
-header {
-  display:flex; align-items:center;
-  padding:10px 20px; background:#fff;
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+color:white;
 }
-header img { height:70px; margin-right:15px; }
-.brand h1 { margin:0; font-size:30px; }
-.brand span { font-size:16px; }
-.brand p { margin:0; font-size:12px; color:#777; }
-
-section { background:#fff; margin:20px; padding:20px; border-radius:6px; }
-input, select, textarea, button {
-  width:100%; padding:10px; margin-top:10px;
+header{
+display:flex;
+align-items:center;
+padding:20px;
+background:rgba(0,0,0,0.6);
 }
-button { background:#2c7; border:none; color:#fff; font-size:16px; cursor:pointer; }
-
-.lang { position:absolute; right:20px; top:20px; }
+header img{
+height:90px;
+margin-right:20px;
+}
+.brand h1{
+margin:0;
+font-size:36px;
+letter-spacing:2px;
+}
+.brand span{
+font-size:18px;
+color:#ccc;
+}
+.brand p{
+margin:0;
+font-size:14px;
+color:#f5c16c;
+}
+section{
+margin:30px;
+padding:25px;
+background:rgba(255,255,255,0.1);
+border-radius:12px;
+backdrop-filter:blur(10px);
+}
+input,select,textarea{
+width:100%;
+padding:12px;
+margin-top:12px;
+border-radius:8px;
+border:none;
+}
+button{
+width:100%;
+padding:12px;
+margin-top:15px;
+background:#f5c16c;
+border:none;
+border-radius:8px;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+}
+.property-card{
+background:#fff;
+color:#000;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+}
+.property-card img{
+width:100%;
+border-radius:10px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <img src="logo.png">
-  <div class="brand">
-    <h1>PROMISEDLAND <span>REALESTATE</span></h1>
-    <p>WHERE YOUR VISION MEETS ITS ADDRESS</p>
-  </div>
-
-  <div class="lang">
-    <button onclick="setLang('en')">EN</button>
-    <button onclick="setLang('ta')">TA</button>
-  </div>
+<img src="logo.png">
+<div class="brand">
+<h1>PROMISEDLAND <span>REALESTATE</span></h1>
+<p>WHERE YOUR VISION MEETS ITS ADDRESS</p>
+</div>
 </header>
 
-<!-- SEARCH -->
 <section>
-<h2 id="searchTitle">Search Property</h2>
+<h2>Search Property</h2>
 
-<select id="type">
-  <option>Buy</option><option>Sell</option><option>Rent</option>
+<select id="searchType">
+<option value="">Buy/Sell/Rent</option>
+<option>Buy</option>
+<option>Sell</option>
+<option>Rent</option>
 </select>
 
-<select id="category">
-  <option>Plot</option><option>Land</option><option>Agriculture</option>
-  <option>Apartment</option><option>House</option><option>Industry</option><option>Shop</option>
+<select id="searchCategory">
+<option value="">Property Type</option>
+<option>Plot</option>
+<option>Land</option>
+<option>Agriculture</option>
+<option>Apartment</option>
+<option>House</option>
+<option>Industry</option>
+<option>Shop</option>
 </select>
 
-<input placeholder="District">
-<input placeholder="Village / Location">
-<button>Search</button>
+<select id="searchDistrict">
+<option value="">Select District</option>
+</select>
+
+<input id="searchVillage" placeholder="Village / Location">
+
+<button onclick="loadProperties()">Search</button>
+
+<div id="propertyList"></div>
 </section>
 
-<!-- POST PROPERTY -->
 <section>
-<h2 id="postTitle">Post Property</h2>
+<h2>Post Property</h2>
 
-<input placeholder="Person / Company Name">
-<input placeholder="Mobile Number">
-<select><option>Buy</option><option>Sell</option><option>Rent</option></select>
+<form id="propertyForm" enctype="multipart/form-data">
 
-<select>
-<option>Plot</option><option>Land</option><option>Agriculture</option>
-<option>Apartment</option><option>House</option><option>Industry</option><option>Shop</option>
+<input name="name" placeholder="Person / Company Name" required>
+<input name="mobile" placeholder="Mobile Number" required>
+
+<select name="type">
+<option>Buy</option>
+<option>Sell</option>
+<option>Rent</option>
 </select>
 
-<input placeholder="District">
-<input placeholder="Village">
-<input placeholder="Area (Sqft / Cent / Acre)">
-<input placeholder="Price">
-<input type="file">
-<textarea placeholder="Description"></textarea>
-<button>Submit Property</button>
+<select name="category">
+<option>Plot</option>
+<option>Land</option>
+<option>Agriculture</option>
+<option>Apartment</option>
+<option>House</option>
+<option>Industry</option>
+<option>Shop</option>
+</select>
+
+<select name="district" id="postDistrict"></select>
+
+<input name="village" placeholder="Village / Location">
+<input name="area" placeholder="Area (Sqft / Cent / Acre)">
+<input name="price" placeholder="Price" required>
+<input type="file" name="image">
+<textarea name="description" placeholder="Description"></textarea>
+
+<button type="submit">Submit Property</button>
+
+</form>
 </section>
 
-<!-- ADMIN -->
 <section>
 <h2>Admin Panel</h2>
-<input type="password" id="adminPass" placeholder="Admin Password">
+<input type="password" id="adminPassword" placeholder="Admin Password">
 <button onclick="adminLogin()">Login</button>
-<p id="adminMsg"></p>
+<div id="adminPanel"></div>
 </section>
 
 <script>
-function adminLogin(){
- fetch("/admin/login",{
-  method:"POST",
-  headers:{"Content-Type":"application/json"},
-  body:JSON.stringify({password:adminPass.value})
- }).then(r=>r.json()).then(d=>{
-  adminMsg.innerText = d.success ? "Login Success" : "Wrong password";
- });
+
+const API = "https://promisedland-realestate.onrender.com";
+let adminToken = "";
+
+const districts = [
+"Ariyalur","Chengalpattu","Chennai","Coimbatore","Cuddalore",
+"Dharmapuri","Dindigul","Erode","Kallakurichi","Kanchipuram",
+"Kanyakumari","Karur","Krishnagiri","Madurai","Mayiladuthurai",
+"Nagapattinam","Namakkal","Nilgiris","Perambalur","Pudukkottai",
+"Ramanathapuram","Ranipet","Salem","Sivaganga","Tenkasi",
+"Thanjavur","Theni","Thoothukudi","Tiruchirappalli","Tirunelveli",
+"Tirupattur","Tiruppur","Tiruvallur","Tiruvannamalai","Tiruvarur",
+"Vellore","Viluppuram","Virudhunagar"
+];
+
+districts.forEach(d=>{
+document.getElementById("searchDistrict").innerHTML += `<option>${d}</option>`;
+document.getElementById("postDistrict").innerHTML += `<option>${d}</option>`;
+});
+
+async function loadProperties(){
+const res = await fetch(API + "/properties");
+const data = await res.json();
+const list = document.getElementById("propertyList");
+list.innerHTML="";
+data.forEach(p=>{
+list.innerHTML+=`
+<div class="property-card">
+<img src="${p.imageUrl || 'https://via.placeholder.com/400'}">
+<h3>${p.category} - ${p.type}</h3>
+<p>${p.district} - ${p.village}</p>
+<p>Area: ${p.area}</p>
+<p>₹ ${p.price}</p>
+<a href="https://wa.me/91${p.mobile}?text=I am interested in your property">WhatsApp Enquiry</a>
+</div>`;
+});
 }
 
-function setLang(l){
- if(l==="ta"){
-  searchTitle.innerText="சொத்து தேடல்";
-  postTitle.innerText="சொத்து பதிவு";
- }
- else{
-  searchTitle.innerText="Search Property";
-  postTitle.innerText="Post Property";
- }
+document.getElementById("propertyForm").addEventListener("submit",async e=>{
+e.preventDefault();
+const formData = new FormData(e.target);
+
+const res = await fetch(API+"/properties",{
+method:"POST",
+body:formData
+});
+const data = await res.json();
+alert("Property submitted. Await admin approval.");
+});
+
+async function adminLogin(){
+const pass = document.getElementById("adminPassword").value;
+const res = await fetch(API+"/admin/login",{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({password:pass})
+});
+const data = await res.json();
+if(data.success){
+adminToken=data.token;
+loadPending();
+}else{
+alert("Wrong password");
 }
+}
+
+async function loadPending(){
+const res = await fetch(API+"/admin/pending",{
+headers:{Authorization:adminToken}
+});
+const data = await res.json();
+const panel=document.getElementById("adminPanel");
+panel.innerHTML="";
+data.forEach(p=>{
+panel.innerHTML+=`
+<div class="property-card">
+<p>${p.name} - ${p.mobile}</p>
+<p>${p.district}</p>
+<button onclick="approve('${p.id}')">Approve</button>
+</div>`;
+});
+}
+
+async function approve(id){
+await fetch(API+"/admin/approve/"+id,{
+method:"POST",
+headers:{Authorization:adminToken}
+});
+alert("Approved");
+loadPending();
+}
+
+loadProperties();
+
 </script>
 
 </body>
