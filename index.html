@@ -23,7 +23,11 @@ color:#1a1a1a;
 }
 
 /* HEADER */
-header{
+header{<select id="langSwitch" onchange="switchLang()" style="padding:6px;border-radius:8px;">
+<option value="en">English</option>
+<option value="ta">தமிழ்</option>
+</select>
+
 background:linear-gradient(90deg,#0b2c5f,#1f4ea0,#0b2c5f);
 color:white;
 padding:20px 60px;
@@ -204,6 +208,18 @@ font-size:28px;
 </div>
 </div>
 </header>
+<div class="hero">
+  <div class="stats">
+<div><strong>38</strong>Districts Covered</div>
+<div><strong>100%</strong>Verified Listings</div>
+<div><strong>₹500Cr+</strong>Property Value Listed</div>
+<div><strong>24/7</strong>AI Support</div>
+</div>
+<div>
+<h1>PROMISEDLAND</h1>
+<p>India’s Next Generation Real Estate Platform</p>
+</div>
+</div>
 
 <div class="container">
 
@@ -350,6 +366,21 @@ font-size:28px;
 <!-- PROPERTY LIST -->
 <div class="card full-width">
 <h2>Available Properties</h2>
+  <div class="trust full-width">
+<div>
+<h3>✔ Government Data Ready</h3>
+<p>District Integrated Platform</p>
+</div>
+<div>
+<h3>✔ Secure Transactions</h3>
+<p>Firebase Protected System</p>
+</div>
+<div>
+<h3>✔ Enterprise Technology</h3>
+<p>Cloud + AI Driven</p>
+</div>
+</div>
+
 <div id="propertyList"></div>
 </div>
 
@@ -435,5 +466,12 @@ adminLogin();
 loadProperties();
 </script>
 
+<div class="float-btn call" onclick="window.location='tel:+919080581547'">
+📞 Call
+</div>
+
+<div class="float-btn" onclick="window.location='https://wa.me/919080581547'">
+💬 WhatsApp
+</div>
 </body>
 </html>
