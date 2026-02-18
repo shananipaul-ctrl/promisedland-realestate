@@ -21,6 +21,10 @@ font-family: 'Segoe UI', sans-serif;
 background:linear-gradient(135deg,#eef3fb,#dfe9f7);
 color:#1a1a1a;
 }
+<!-- Sovereign Wealth Loader -->
+<div id="luxLoader">
+  <div class="luxLogo">PROMISEDLAND</div>
+</div>
 
 /* HEADER */
 header{<select id="langSwitch" onchange="switchLang()" style="padding:6px;border-radius:8px;">
@@ -479,6 +483,46 @@ window.addEventListener("load", function(){
     document.getElementById("luxuryLoader").style.display="none";
   },1200);
 });
+</script>
+  
+<script>
+
+/* Loader Fade Out */
+window.addEventListener("load", function(){
+setTimeout(function(){
+document.getElementById("luxLoader").style.opacity="0";
+document.getElementById("luxLoader").style.visibility="hidden";
+},1500);
+});
+
+/* Scroll Reveal */
+const sections = document.querySelectorAll(".card, .property");
+sections.forEach(section=>{
+section.classList.add("fade-section");
+});
+
+const observer = new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible");
+}
+});
+},{threshold:0.2});
+
+sections.forEach(section=>{
+observer.observe(section);
+});
+
+/* Gold Cursor Glow */
+const glow = document.createElement("div");
+glow.classList.add("cursor-glow");
+document.body.appendChild(glow);
+
+document.addEventListener("mousemove", e=>{
+glow.style.left = e.clientX + "px";
+glow.style.top = e.clientY + "px";
+});
+
 </script>
 </body><div id="luxuryLoader" style="
 position:fixed;
