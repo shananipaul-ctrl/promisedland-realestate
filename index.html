@@ -3,550 +3,188 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promised Land | Tamil Nadu Real Estate</title>
 
-<title>PromisedLand Real Estate | Buy Sell Rent Property Tamil Nadu</title>
-
-<meta name="description" content="Buy, Sell & Rent properties across all 38 districts in Tamil Nadu. Premium Real Estate Platform.">
-<meta name="keywords" content="Real Estate Tamil Nadu, Buy Land TN, Sell Plot, Rent House">
-<meta name="author" content="PromisedLand Real Estate">
-
-<link rel="icon" href="logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
+body{margin:0;font-family:Poppins;background:#f4f6f9;}
+.container{max-width:1200px;margin:auto;padding:20px;}
 
-/* GLOBAL */
-body{
-margin:0;
-font-family: 'Segoe UI', sans-serif;
-background:linear-gradient(135deg,#eef3fb,#dfe9f7);
-color:#1a1a1a;
-}
-<!-- Sovereign Wealth Loader -->
-<div id="luxLoader">
-  <div class="luxLogo">PROMISEDLAND</div>
-</div>
+header{background:#0f172a;color:#fff;padding:20px;}
+nav a{color:#ddd;margin-right:15px;text-decoration:none;}
 
-/* HEADER */
-header{<select id="langSwitch" onchange="switchLang()" style="padding:6px;border-radius:8px;">
-<option value="en">English</option>
-<option value="ta">தமிழ்</option>
-</select>
-
-background:linear-gradient(90deg,#0b2c5f,#1f4ea0,#0b2c5f);
-color:white;
-padding:20px 60px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 6px 20px rgba(0,0,0,0.2);
+.hero{
+background:linear-gradient(135deg,#1e3a8a,#2563eb);
+color:#fff;text-align:center;padding:60px 20px;
 }
 
-.logo{
-display:flex;
-align-items:center;
+.search-box{
+background:#fff;padding:20px;margin-top:-30px;
+border-radius:10px;box-shadow:0 5px 20px rgba(0,0,0,0.1);
+text-align:center;
 }
+.search-box input,.search-box select{padding:10px;margin:5px;width:22%;}
+.search-box button{padding:10px 20px;background:#16a34a;color:#fff;border:none;}
 
-.logo img{
-height:95px;   /* BIGGER LOGO */
-margin-right:20px;
-}
+.section{padding:40px 20px;}
+.section h2{text-align:center;margin-bottom:20px;}
 
-.brand{
-font-size:38px;
-font-weight:900;
-letter-spacing:2px;
-background:linear-gradient(90deg,#FFD700,#FFC107,#ffdd55);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.brand span{
-font-weight:500;
-font-size:22px;
-color:white;
--webkit-text-fill-color:white;
-background:none;
-}
-
-.tagline{
-font-size:14px;
-opacity:0.9;
-letter-spacing:1px;
-margin-top:4px;
-}
-
-/* LAYOUT */
-.container{
+.grid{
 display:grid;
-grid-template-columns: 1fr 1fr;
-gap:40px;
-padding:50px 70px;
-}
-
-.full-width{
-grid-column:1/3;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 }
 
 .card{
-background:white;
-padding:30px;
-border-radius:16px;
-box-shadow:0 15px 40px rgba(0,0,0,0.08);
-transition:0.3s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-}
-
-h2{
-margin-top:0;
-color:#0b2c5f;
-font-size:22px;
-margin-bottom:20px;
-}
-
-/* FORM ELEMENTS */
-input, select, textarea{
-width:100%;
-padding:12px;
-margin:10px 0 18px;
-border-radius:10px;
-border:1px solid #d0d8e5;
-font-size:14px;
-background:#f9fbff;
-transition:0.3s;
-}
-
-input:focus, select:focus, textarea:focus{
-outline:none;
-border-color:#1f4ea0;
-box-shadow:0 0 8px rgba(31,78,160,0.2);
-}
-
-button{
-padding:9px 22px;
-background:linear-gradient(90deg,#0b2c5f,#1f4ea0);
-color:white;
-border:none;
-border-radius:25px;
-font-size:13px;
-cursor:pointer;
-transition:0.3s;
-box-shadow:0 5px 15px rgba(0,0,0,0.15);
-}
-
-button:hover{
-transform:scale(1.07);
-background:linear-gradient(90deg,#1f4ea0,#0b2c5f);
-}
-
-/* PROPERTY CARD */
-.property{
-border:none;
-padding:18px;
-border-radius:14px;
-margin-bottom:20px;
-background:#ffffff;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-transition:0.3s;
-}
-
-.property:hover{
-transform:translateY(-4px);
-box-shadow:0 15px 30px rgba(0,0,0,0.15);
-}
-
-.property img{
-width:100%;
-height:200px;
-object-fit:cover;
-border-radius:12px;
-margin-bottom:12px;
-}
-
-.property h3{
-margin:5px 0;
-color:#0b2c5f;
-}
-
-/* FOOTER */
-.footer{
-background:linear-gradient(90deg,#0b2c5f,#1f4ea0);
-color:white;
+background:#fff;padding:15px;border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 text-align:center;
-padding:30px;
-margin-top:60px;
-font-size:14px;
-letter-spacing:1px;
 }
 
-/* RESPONSIVE */
-@media(max-width:900px){
-.container{
-grid-template-columns:1fr;
-padding:30px;
-}
-.full-width{
-grid-column:1;
-}
-.logo img{
-height:75px;
-}
-.brand{
-font-size:28px;
-}
+.card img{width:100%;border-radius:8px;}
+
+.btn{
+display:inline-block;margin-top:10px;
+padding:10px 15px;background:#2563eb;color:#fff;
+text-decoration:none;border-radius:5px;
 }
 
+footer{
+background:#020617;color:#ccc;text-align:center;padding:30px;
+}
+
+.whatsapp{
+position:fixed;bottom:20px;right:20px;
+background:#25D366;color:#fff;
+padding:15px;border-radius:50%;
+text-decoration:none;font-size:20px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">
-<img src="logo.png">
-<div>
-<div class="brand">PROMISEDLAND <span>REALESTATE</span></div>
-<div class="tagline">Where Your Vision Meets Its Address</div>
-</div>
+<div class="container">
+<h2>Promised Land</h2>
+<nav>
+<a href="#">Home</a>
+<a href="#">Properties</a>
+<a href="#">Services</a>
+<a href="#">Contact</a>
+</nav>
 </div>
 </header>
-<div class="hero">
-  <div class="stats">
-<div><strong>38</strong>Districts Covered</div>
-<div><strong>100%</strong>Verified Listings</div>
-<div><strong>₹500Cr+</strong>Property Value Listed</div>
-<div><strong>24/7</strong>AI Support</div>
-</div>
-<div>
-<h1>PROMISEDLAND</h1>
-<p>India’s Next Generation Real Estate Platform</p>
-</div>
+
+<section class="hero">
+<h1>Find Properties Across Tamil Nadu</h1>
+<p>Buy, Sell & Invest in plots, villas, commercial lands & more</p>
+</section>
+
+<div class="container search-box">
+<input placeholder="Search location">
+<select><option>Type</option><option>Plot</option><option>Villa</option></select>
+<select><option>Budget</option><option>Below 20L</option></select>
+<button>Search</button>
 </div>
 
-<div class="container">
+<!-- PROPERTY TYPES -->
+<section class="section">
+<h2>Browse Property Types</h2>
+<div class="grid">
+<div class="card">🏢 Apartments & Flats<br><small>1-4 BHK</small></div>
+<div class="card">🏠 Independent Houses</div>
+<div class="card">🏬 Office & Shops</div>
+<div class="card">🏭 Warehouse</div>
+<div class="card">🌾 Plots & Land</div>
+<div class="card">🌿 Agricultural Land</div>
+<div class="card">🏘️ Villas & Gated</div>
+<div class="card">🍽️ Hotel / Restaurant</div>
+</div>
+</section>
 
-<!-- SEARCH -->
+<!-- FEATURED -->
+<section class="section">
+<h2>Featured Properties</h2>
+<div class="grid">
+
 <div class="card">
-<h2>Search Property</h2>
-
-<select id="filterType">
-<option value="">Buy / Sell / Rent</option>
-<option value="buy">Buy</option>
-<option value="sell">Sell</option>
-<option value="rent">Rent</option>
-</select>
-
-<select id="filterCategory">
-<option value="">Property Type</option>
-<option>Plot</option>
-<option>Land</option>
-<option>Agriculture</option>
-<option>Apartment</option>
-<option>House</option>
-<option>Industry</option>
-<option>Shop</option>
-</select>
-
-<select id="filterDistrict">
-<option value="">Select District</option>
-<option>Chennai</option>
-<option>Coimbatore</option>
-<option>Madurai</option>
-<option>Salem</option>
-<option>Trichy</option>
-<option>Tirunelveli</option>
-<option>Vellore</option>
-<option>Erode</option>
-<option>Thanjavur</option>
-<option>Dharmapuri</option>
-<option>Krishnagiri</option>
-<option>Kanchipuram</option>
-<option>Namakkal</option>
-<option>Dindigul</option>
-<option>Karur</option>
-<option>Cuddalore</option>
-<option>Nagapattinam</option>
-<option>Villupuram</option>
-<option>Thoothukudi</option>
-<option>Sivagangai</option>
-<option>Ramanathapuram</option>
-<option>Tiruppur</option>
-<option>Nilgiris</option>
-<option>Perambalur</option>
-<option>Ariyalur</option>
-<option>Tiruvallur</option>
-<option>Virudhunagar</option>
-<option>Kanyakumari</option>
-<option>Pudukottai</option>
-<option>Tiruvarur</option>
-<option>Theni</option>
-<option>Tirupattur</option>
-<option>Ranipet</option>
-<option>Kallakurichi</option>
-<option>Tenkasi</option>
-<option>Mayiladuthurai</option>
-<option>Chengalpattu</option>
-</select>
-<input type="text" id="village" placeholder="Village / Location">
-<button onclick="loadProperties()">Search</button>
+<img src="https://via.placeholder.com/400x250">
+<h3>Residential Plot</h3>
+<p>📍 Ramanathapuram</p>
+<strong>₹25 Lakhs</strong><br>
+<a class="btn" href="https://wa.me/919080581547">WhatsApp</a>
 </div>
 
-<!-- POST PROPERTY -->
 <div class="card">
-<h2>Post Property</h2>
-
-<input type="text" id="name" placeholder="Person / Company Name">
-<input type="text" id="mobile" placeholder="Mobile Number">
-
-<select id="type">
-<option value="sell">Sell</option>
-<option value="buy">Buy</option>
-<option value="rent">Rent</option>
-</select>
-
-<select id="category">
-<option>Plot</option>
-<option>Land</option>
-<option>Agriculture</option>
-<option>Apartment</option>
-<option>House</option>
-<option>Industry</option>
-<option>Shop</option>
-</select>
-
-<select id="district">
-<option>Select District</option>
-<!-- 38 districts kept exactly -->
-<option>Chennai</option>
-<option>Coimbatore</option>
-<option>Madurai</option>
-<option>Salem</option>
-<option>Trichy</option>
-<option>Tirunelveli</option>
-<option>Vellore</option>
-<option>Erode</option>
-<option>Thanjavur</option>
-<option>Dharmapuri</option>
-<option>Krishnagiri</option>
-<option>Kanchipuram</option>
-<option>Namakkal</option>
-<option>Dindigul</option>
-<option>Karur</option>
-<option>Cuddalore</option>
-<option>Nagapattinam</option>
-<option>Villupuram</option>
-<option>Thoothukudi</option>
-<option>Sivagangai</option>
-<option>Ramanathapuram</option>
-<option>Tiruppur</option>
-<option>Nilgiris</option>
-<option>Perambalur</option>
-<option>Ariyalur</option>
-<option>Tiruvallur</option>
-<option>Virudhunagar</option>
-<option>Kanyakumari</option>
-<option>Pudukottai</option>
-<option>Tiruvarur</option>
-<option>Theni</option>
-<option>Tirupattur</option>
-<option>Ranipet</option>
-<option>Kallakurichi</option>
-<option>Tenkasi</option>
-<option>Mayiladuthurai</option>
-<option>Chengalpattu</option>
-</select>
-
-<input type="text" id="village" placeholder="Village / Location">
-<input type="text" id="title" placeholder="Area (Sqft / Cent / Acre)">
-<input type="number" id="price" placeholder="Price">
-<input type="file" id="images" multiple>
-<textarea id="description" placeholder="Description"></textarea>
-
-<button onclick="submitProperty()">Submit</button>
-</div>
-
-<!-- PROPERTY LIST -->
-<div class="card full-width">
-<h2>Available Properties</h2>
-  <div class="trust full-width">
-<div>
-<h3>✔ Government Data Ready</h3>
-<p>District Integrated Platform</p>
-</div>
-<div>
-<h3>✔ Secure Transactions</h3>
-<p>Firebase Protected System</p>
-</div>
-<div>
-<h3>✔ Enterprise Technology</h3>
-<p>Cloud + AI Driven</p>
-</div>
-</div>
-
-<div id="propertyList"></div>
-</div>
-
-<!-- ADMIN PANEL -->
-<div class="card full-width">
-<h2>Admin Panel</h2>
-<input type="password" id="adminPass" placeholder="Admin Password">
-<button onclick="adminLogin()">Login</button>
-<div id="adminArea"></div>
+<img src="https://via.placeholder.com/400x250">
+<h3>Luxury Villa</h3>
+<p>📍 Chennai</p>
+<strong>₹1.2 Cr</strong><br>
+<a class="btn" href="https://wa.me/919080581547">WhatsApp</a>
 </div>
 
 </div>
+</section>
 
-<div class="footer">
-📞 +91 9080581547 | ✉ rera.promizedland@gmail.com  
-<br><br>
-© 2026 PromisedLand Real Estate. All Rights Reserved.
+<!-- SERVICES -->
+<section class="section">
+<h2>Real Estate Services</h2>
+<div class="grid">
+<div class="card">📐 Architects</div>
+<div class="card">🔧 Builders</div>
+<div class="card">⚖️ Lawyers</div>
+<div class="card">🎨 Interior</div>
+<div class="card">🏦 Home Loans</div>
+<div class="card">🔮 Vastu</div>
+<div class="card">📊 Valuers</div>
+<div class="card">🏢 Agents</div>
 </div>
+</section>
 
-<script>
-const API="https://promisedland-realestate.onrender.com";
-
-async function loadProperties(){
-const res=await fetch(API+"/properties?approved=true");
-const data=await res.json();
-let html="";
-data.forEach(p=>{
-html+=`
-<div class="property">
-${p.imageUrls && p.imageUrls.length? `<img src="${p.imageUrls[0]}">`:""}
-<h3>${p.title}</h3>
-<p><b>District:</b> ${p.district}</p>
-<p><b>Price:</b> ₹${p.price}</p>
-<p>${p.description}</p>
-</div>`;
-});
-document.getElementById("propertyList").innerHTML=html;
-}
-
-async function submitProperty(){
-const formData=new FormData();
-formData.append("name",name.value);
-formData.append("mobile",mobile.value);
-formData.append("type",type.value);
-formData.append("category",category.value);
-formData.append("district",district.value);
-formData.append("village",village.value);
-formData.append("title",title.value);
-formData.append("price",price.value);
-formData.append("description",description.value);
-for(let i=0;i<images.files.length;i++){
-formData.append("images",images.files[i]);
-}
-await fetch(API+"/properties",{method:"POST",body:formData});
-alert("Property submitted. Await admin approval.");
-}
-
-async function adminLogin(){
-if(document.getElementById("adminPass").value!=="Vs5002190?"){
-alert("Wrong password");
-return;
-}
-const res=await fetch(API+"/admin/pending");
-const data=await res.json();
-let html="<h3>Pending Properties</h3>";
-data.forEach(p=>{
-html+=`
-<div class="property">
-<h4>${p.title}</h4>
-<p>${p.district}</p>
-<button onclick="approve('${p.id}')">Approve</button>
-</div>`;
-});
-document.getElementById("adminArea").innerHTML=html;
-}
-
-async function approve(id){
-await fetch(API+"/admin/approve/"+id,{method:"POST"});
-alert("Approved");
-adminLogin();
-}
-
-loadProperties();
-</script>
-
-<div class="float-btn call" onclick="window.location='tel:+919080581547'">
-📞 Call
+<!-- DISTRICTS -->
+<section class="section">
+<h2>All Tamil Nadu Districts</h2>
+<div class="grid">
+<div class="card">Ariyalur</div><div class="card">Chengalpattu</div>
+<div class="card">Chennai</div><div class="card">Coimbatore</div>
+<div class="card">Cuddalore</div><div class="card">Dharmapuri</div>
+<div class="card">Dindigul</div><div class="card">Erode</div>
+<div class="card">Hosur</div><div class="card">Kallakurichi</div>
+<div class="card">Kanchipuram</div><div class="card">Kanyakumari</div>
+<div class="card">Karur</div><div class="card">Krishnagiri</div>
+<div class="card">Madurai</div><div class="card">Mayiladuthurai</div>
+<div class="card">Nagapattinam</div><div class="card">Namakkal</div>
+<div class="card">Nilgiris</div><div class="card">Perambalur</div>
+<div class="card">Pudukkottai</div><div class="card">Ramanathapuram</div>
+<div class="card">Ranipet</div><div class="card">Salem</div>
+<div class="card">Sivaganga</div><div class="card">Tenkasi</div>
+<div class="card">Thanjavur</div><div class="card">Theni</div>
+<div class="card">Thoothukudi</div><div class="card">Tiruchirappalli</div>
+<div class="card">Tirunelveli</div><div class="card">Tirupattur</div>
+<div class="card">Tiruppur</div><div class="card">Tiruvallur</div>
+<div class="card">Tiruvannamalai</div><div class="card">Vellore</div>
+<div class="card">Viluppuram</div><div class="card">Virudhunagar</div>
 </div>
+</section>
 
-<div class="float-btn" onclick="window.location='https://wa.me/919080581547'">
-💬 WhatsApp
+<!-- RERA -->
+<section class="section">
+<h2>RERA Information</h2>
+<div class="card">
+<p>Email: rera.promizedland@gmail.com</p>
+<p>Phone: +91 90805 81547</p>
+<p>All listings are verified for trust & transparency.</p>
 </div>
-<script>
-window.addEventListener("load", function(){
-  setTimeout(()=>{
-    document.getElementById("luxuryLoader").style.display="none";
-  },1200);
-});
-</script>
-  
-<script>
+</section>
 
-/* Loader Fade Out */
-window.addEventListener("load", function(){
-setTimeout(function(){
-document.getElementById("luxLoader").style.opacity="0";
-document.getElementById("luxLoader").style.visibility="hidden";
-},1500);
-});
+<footer>
+<p>© 2026 Promised Land</p>
+<p>rera.promizedland@gmail.com | +91 90805 81547</p>
+</footer>
 
-/* Scroll Reveal */
-const sections = document.querySelectorAll(".card, .property");
-sections.forEach(section=>{
-section.classList.add("fade-section");
-});
+<a class="whatsapp" href="https://wa.me/919080581547">💬</a>
 
-const observer = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if(entry.isIntersecting){
-entry.target.classList.add("visible");
-}
-});
-},{threshold:0.2});
-
-sections.forEach(section=>{
-observer.observe(section);
-});
-
-/* Gold Cursor Glow */
-const glow = document.createElement("div");
-glow.classList.add("cursor-glow");
-document.body.appendChild(glow);
-
-document.addEventListener("mousemove", e=>{
-glow.style.left = e.clientX + "px";
-glow.style.top = e.clientY + "px";
-});
-
-</script>
-</body><div id="luxuryLoader" style="
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:#000814;
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:9999;
-flex-direction:column;
-color:#FFD700;
-font-size:28px;
-font-weight:bold;">
-PROMISEDLAND
-<div style="margin-top:20px;width:60px;height:60px;border:4px solid #FFD700;border-top:4px solid transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
-</div>
-
-<style>
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-</style>
-
+</body>
 </html>
